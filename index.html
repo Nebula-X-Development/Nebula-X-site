@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula-X</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            background: radial-gradient(circle at bottom, #7c2ae8, #000);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 100%;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: width 0.3s ease-in-out;
+            padding-top: 15px;
+            z-index: 10;
+            border-bottom: 2px solid #d580ff;
+        }
+
+        .sidebar:hover {
+            width: 70px;
+        }
+
+        .sidebar .logo {
+            width: 40px;
+            height: auto;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .logo:hover {
+            transform: scale(1.2);
+        }
+
+        .sidebar .divider {
+            width: 80%;
+            border-bottom: 1px solid #d580ff;
+            margin-bottom: 15px;
+        }
+
+        .sidebar .nav-item {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: #d580ff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .sidebar .nav-item.selected {
+            background-color: #b34cd9;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .sidebar .nav-item i {
+            font-size: 16px;
+        }
+
+        .sidebar .nav-item:hover {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        /* Content */
+        .content {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: white;
+        }
+
+        .content h1 span {
+            color: #d580ff;
+            text-shadow: 0 0 20px #d580ff, 0 0 40px #d580ff, 0 0 60px #d580ff;
+        }
+
+        .content p {
+            margin: 10px 0 20px;
+            font-size: 1.2rem;
+            color: #ffffffbb;
+        }
+
+        .content a {
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: #b34cd9;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 20px #d580ff, 0 0 40px #d580ff, 0 0 60px #d580ff;
+            position: relative;
+            border: 2px solid #d580ff;
+            box-shadow: 0 0 10px #d580ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+        }
+
+        .content a:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px #d580ff;
+            opacity: 0.9;
+        }
+
+        /* Particle Effect */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 182, 193, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: shoot-out 1s forwards;
+        }
+
+        @keyframes shoot-out {
+            from { opacity: 1; transform: translate(0, 0) scale(1); }
+            to { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.5); }
+        }
+
+        /* Responsiveness for Sidebar */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 50px;
+            }
+            .sidebar:hover {
+                width: 70px;
+            }
+            .sidebar .nav-item {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.querySelector('.stars');
+            const totalStars = 400;  // Doubled the number of stars
+
+            for (let i = 0; i < totalStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.animationDuration = `${2 + Math.random() * 3}s`;
+                starsContainer.appendChild(star);
+            }
+
+            const navItems = document.querySelectorAll('.sidebar .nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    navItems.forEach(nav => nav.classList.remove('selected'));
+                    item.classList.add('selected');
+                });
+            });
+
+            const button = document.querySelector('.content a');
+            button.addEventListener('mouseenter', () => {
+                const buttonRect = button.getBoundingClientRect();
+                const container = document.body;
+
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+
+                    const angle = Math.random() * 2 * Math.PI;
+                    const distance = Math.random() * 120 + 60;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance * 0.5;
+
+                    particle.style.setProperty('--x', `${x}px`);
+                    particle.style.setProperty('--y', `${y}px`);
+                    particle.style.left = `${buttonRect.left + buttonRect.width / 2}px`;
+                    particle.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
+
+                    container.appendChild(particle);
+
+                    particle.addEventListener('animationend', () => {
+                        particle.remove();
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="background">
+        <div class="stars"></div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Logo at the top of the sidebar with link -->
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo">
+            </a>
+            
+            <!-- Divider line -->
+            <div class="divider"></div>
+
+            <!-- Navigation items -->
+            <div class="nav-item selected"><a href="index.html"><i class="fa fa-home" style="color:white;"></i></a></div>
+            <div class="nav-item"><a href="search.html"><i class="fa fa-search" style="color:#d580ff;"></i></a></div>
+<div class="nav-item">
+  <a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a>
+</div>
+            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></div>
+            
+            <!-- Divider line before About and Settings -->
+            <div class="divider"></div>
+
+            <!-- New "About" and "Settings" buttons at the bottom -->
+            <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info "style="color:#d580ff;"></i></div>
+            <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Welcome to <span>Nebula-X</span></h1>
+            <p>Stay tuned for the final release</p>
+            <a href="search.html">Get Started</a>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const performanceSwitch = document.getElementById('performanceMode');
+        const starsContainer = document.querySelector('.stars');
+        const totalStars = 400;
+
+        // Generate stars
+        for (let i = 0; i < totalStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${2 + Math.random() * 3}s`;
+            starsContainer.appendChild(star);
+        }
+
+        // Check and set the initial state from localStorage
+        if (localStorage.getItem('performanceMode') === 'true') {
+            starsContainer.style.display = 'none'; // Hide stars
+            performanceSwitch.checked = true;
+        }
+
+        // Toggle performance mode
+        performanceSwitch.addEventListener('change', () => {
+            if (performanceSwitch.checked) {
+                starsContainer.style.display = 'none'; // Hide stars
+                localStorage.setItem('performanceMode', 'true');
+            } else {
+                starsContainer.style.display = 'block'; // Show stars
+                localStorage.setItem('performanceMode', 'false');
+            }
+        });
+    });
+      document.addEventListener('DOMContentLoaded', () => {
+      const savedTabCloak = localStorage.getItem('tabCloak');
+      if (savedTabCloak) {
+          const { title, icon } = JSON.parse(savedTabCloak);
+          updateTab(title, icon);
+      }
+  });
+
+  function updateTab(title, icon) {
+      document.title = title;
+      updateFavicon(icon);
+  }
+
+  function updateFavicon(iconURL) {
+      setTimeout(() => { // Delay to ensure DOM is ready
+          // Remove existing favicons
+          document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+          // Create and append new favicon
+          const newFavicon = document.createElement("link");
+          newFavicon.rel = "icon";
+          newFavicon.type = "image/x-icon";
+          newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+          document.head.appendChild(newFavicon);
+
+          console.log("Favicon updated to:", newFavicon.href);
+      }, 100); // Small delay to avoid execution conflicts
+  }
+</script>
+<script src="panicKey.js"></script>
+</html>

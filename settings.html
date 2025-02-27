@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula-X</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            background: radial-gradient(circle at bottom, #7c2ae8, #000);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 100%;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: width 0.3s ease-in-out;
+            padding-top: 15px;
+            z-index: 10;
+            border-bottom: 2px solid #d580ff;
+        }
+
+        .sidebar:hover {
+            width: 70px;
+        }
+
+        .sidebar .logo {
+            width: 40px;
+            height: auto;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .logo:hover {
+            transform: scale(1.2);
+        }
+
+        .sidebar .divider {
+            width: 80%;
+            border-bottom: 1px solid #d580ff;
+            margin-bottom: 15px;
+        }
+
+        .sidebar .nav-item {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: #d580ff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .sidebar .nav-item.selected {
+            background-color: #b34cd9;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .sidebar .nav-item i {
+            font-size: 16px;
+        }
+
+        .sidebar .nav-item:hover {
+            transform: scale(1.2);
+            color: white;
+        }
+
+        .settings-box {
+            width: 80vw;
+            height: 80vh;
+            background-color: #222;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .settings-box:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 25px rgb(179 76 217);
+        }
+
+        .content {
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .content h2 {
+            margin: 0;
+            color: white;
+        }
+
+        .content p {
+            margin: 10px 0 20px;
+            font-size: 1.2rem;
+            color: #ffffffbb;
+        }
+
+        /* Switch styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px; /* Smaller width */
+            height: 22px; /* Thinner height */
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, #555, #333);
+            transition: 0.4s;
+            border-radius: 50px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px; /* Smaller circle */
+            width: 16px; /* Smaller circle */
+            border-radius: 50px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(to bottom, #d580ff, #b34cd9);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px); /* Adjusted for smaller switch */
+        }
+        /* Dropdown Style */
+select {
+    background-color: #444;
+    color: white;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: #d580ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(213, 128, 255, 0.8);
+}
+
+/* Switch styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Slightly larger width */
+    height: 30px; /* Taller height */
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, #555, #333);
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px; /* Larger circle */
+    width: 22px; /* Larger circle */
+    border-radius: 50px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background: linear-gradient(to bottom, #d580ff, #b34cd9);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px); /* Adjusted for larger switch */
+}
+/* Custom Input Fields */
+.custom-input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #555;
+    border-radius: 10px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect for the custom inputs */
+.custom-input:focus {
+    border-color: #d580ff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(213, 128, 255, 0.8);
+}
+     /* Panic Key Section */
+.panic-key-container {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+}
+
+.panic-key-container h3 {
+    color: #d580ff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.panic-key-container p {
+    color: #ffffffbb;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Custom Input for Panic Key and URL */
+.custom-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+}
+
+.custom-input::placeholder {
+    color: #bbb;
+}
+
+/* Apply Button */
+.apply-button {
+    background: linear-gradient(to bottom, #555, #333);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.apply-button:hover {
+    background: #b34cd9;
+}
+
+.notification {
+    position: fixed;
+    top: 20px; /* Adjust as necessary */
+    right: 20px; /* Adjust as necessary */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+    color: white;
+    padding: 20px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 9999999; /* Ensures it's on top of everything */
+    opacity: 0;
+    transform: translateY(-10px); /* Initial position for the slide-in effect */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0); /* Slide into place */
+}
+
+/* Inject JavaScript Section */
+
+
+.settings-heading {
+    font-size: 1.5rem;
+    color: #d580ff; /* Heading color from panic key theme */
+    margin-bottom: 10px;
+}
+
+
+.inject-textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #555;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.inject-textarea:focus {
+    border-color: #d580ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(213, 128, 255, 0.8);
+}
+
+.inject-button {
+    background: linear-gradient(to bottom, #555, #333); /* Matching panic key button */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.inject-button:hover {
+    background-color: #b34cd9;
+}
+
+.inject-button:active {
+    background-color: #9e32d0;
+}
+
+.nebulaXBtn {
+  background: linear-gradient(to bottom, #555, #333); /* Matching panic key button */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="stars"></div>
+
+        <div class="sidebar">
+            <a href="index.html" class="logo-link">
+                <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo">
+            </a>
+            <div class="divider"></div>
+            <div class="nav-item"><a href="index.html"><i class="fa fa-home" style="color:#d580ff;"></i></a></div>
+            <div class="nav-item"><a href="search.html"><i class="fa fa-search" style="color:#d580ff;"></i></a></div>
+            <div class="nav-item"><a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a></div>
+            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></div>
+            <div class="divider"></div>
+            <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info "style="color:#d580ff;"></i></div>
+            <div class="nav-item selected"><a href="settings.html"><i class="fa fa-cogs" style="color:white;"></i></div>
+        </div>
+
+        <div class="content">
+            <div class="settings-box">
+                <h2>General Settings</h2>
+                <p>Performance Mode: toggle particles BETA (currently broken)</p>
+
+                <!-- Performance Mode Switch -->
+                <label class="switch">
+                    <input type="checkbox" id="performanceMode">
+                    <span class="slider"></span>
+                </label>
+                <div class="settings-section">
+    <h3>Performance Stats</h3>
+    <label class="switch">
+        <input type="checkbox" id="performance-stats-toggle">
+        <span class="slider"></span>
+    </label>
+   
+</div>
+
+
+                <hr>
+                <h2>Site Cloaking Settings</h2>
+                <p>About:Blank cloaking BETA </p>
+
+                <!-- About:Blank Cloak Switch -->
+                <label class="switch">
+                    <input type="checkbox" id="cloakSwitch">
+                    <span class="slider"></span>
+                </label>
+
+             
+
+                <!-- Tab Cloak Settings -->
+                <p>Tab Cloaking</p>
+
+                <!-- Dropdown for Predefined Options -->
+                <label for="tabCloakSelect">Choose Site:</label>
+               <select id="tabCloakSelect">
+    <option value="google">Google</option>
+    <option value="untitledDoc">Untitled Doc</option>
+    <option value="canvas">Canvas</option>
+    <option value="desmos">Desmos</option>
+    <option value="googleDrive">Google Drive</option>
+    <option value="custom">Custom</option>
+    <option value="none">None</option> <!-- Added "None" option -->
+</select>
+                <br>
+
+                <!-- Custom Input for Title & Favicon -->
+                <div id="customTabCloak" style="display:none;">
+                    <label for="customTitle">Custom Site Name:</label>
+                    <input type="text" id="customTitle" placeholder="Enter site name">
+                    <br>
+                    <label for="customFavicon">Custom Favicon URL:</label>
+                    <input type="url" id="customFavicon" placeholder="Enter favicon URL">
+                </div>
+             
+<!-- Panic Key Section -->
+<div class="panic-key-container">
+    <p>Panic Key</p>
+    <p>Set panic key / customize panic key</p>
+
+    <!-- Panic Key Input -->
+    <label for="panicKeyInput">Panic Key:</label>
+    <input type="text" id="panicKeyInput" maxlength="1" placeholder="Enter panic key" class="custom-input">
+
+    <!-- Custom URL Input -->
+    <div>
+        <label for="panicKeyURL">Panic URL:</label>
+        <input type="url" id="panicKeyURL" placeholder="Enter redirect URL" class="custom-input">
+    </div>
+
+    <button id="applyPanicKey" class="apply-button">Apply Panic Key</button>
+</div>
+
+<hr>
+            </div>
+ 
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const performanceSwitch = document.getElementById('performanceMode');
+        const starsContainer = document.querySelector('.stars');
+        const cloakSwitch = document.getElementById('cloakMode');
+        const tabCloakSelect = document.getElementById('tabCloakSelect');
+        const customTabCloak = document.getElementById('customTabCloak');
+        const customTitle = document.getElementById('customTitle');
+        const customFavicon = document.getElementById('customFavicon');
+
+        // Check and apply saved settings from localStorage
+        const savedTabCloak = localStorage.getItem('tabCloak');
+        if (savedTabCloak) {
+            const { title, icon } = JSON.parse(savedTabCloak);
+            updateTab(title, icon);
+            tabCloakSelect.value = 'custom';
+            customTitle.value = title;
+            customFavicon.value = icon;
+        }
+
+        // Tab Cloak Dropdown Change
+        tabCloakSelect.addEventListener('change', () => {
+            if (tabCloakSelect.value === 'custom') {
+                customTabCloak.style.display = 'block'; // Show custom input fields
+            } else if (tabCloakSelect.value === 'none') {
+                customTabCloak.style.display = 'none'; // Hide custom input fields
+                resetTabToDefault(); // Reset to default title and favicon
+            } else {
+                customTabCloak.style.display = 'none'; // Hide custom input fields
+                const siteData = getSiteData(tabCloakSelect.value);
+                updateTab(siteData.title, siteData.icon);
+                saveTabCloak(siteData.title, siteData.icon);
+            }
+        });
+
+        // Update Tab Function
+        function updateTab(title, icon) {
+            document.title = title;
+            updateFavicon(icon);
+        }
+
+        // Update Favicon
+        function updateFavicon(iconURL) {
+            setTimeout(() => {
+                document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+                const newFavicon = document.createElement("link");
+                newFavicon.rel = "icon";
+                newFavicon.type = "image/x-icon";
+                newFavicon.href = iconURL + `?v=${new Date().getTime()}`;
+                document.head.appendChild(newFavicon);
+            }, 100);
+        }
+
+        // Save Tab Cloak Settings to localStorage
+        function saveTabCloak(title, icon) {
+            localStorage.setItem('tabCloak', JSON.stringify({ title, icon }));
+        }
+
+        // Predefined Site Data
+        function getSiteData(site) {
+            const siteData = {
+                google: { title: 'Google', icon: 'https://www.google.com/favicon.ico' },
+                untitledDoc: { title: 'Untitled Document', icon: 'https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x16.png' },
+                canvas: { title: 'Canvas', icon: 'https://www.canvaslms.com/favicon.ico' },
+                desmos: { title: 'Desmos Graphing Calculator', icon: 'https://www.desmos.com/favicon.ico' },
+                googleDrive: { title: 'Google Drive', icon: 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png' },
+            };
+            return siteData[site] || { title: '', icon: '' };
+        }
+
+        // Handle custom input
+        customTitle.addEventListener('input', () => {
+            if (tabCloakSelect.value === 'custom') {
+                saveTabCloak(customTitle.value, customFavicon.value);
+                updateTab(customTitle.value, customFavicon.value);
+            }
+        });
+
+        customFavicon.addEventListener('input', () => {
+            if (tabCloakSelect.value === 'custom') {
+                saveTabCloak(customTitle.value, customFavicon.value);
+                updateTab(customTitle.value, customFavicon.value);
+            }
+        });
+
+        // Reset to default title and favicon
+        function resetTabToDefault() {
+            document.title = "Nebula-X"; // Original title
+            updateFavicon("https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png"); // Original favicon
+            localStorage.removeItem('tabCloak'); // Remove settings from localStorage
+        }
+    });
+
+    // Toggle cloak mode
+    cloakSwitch.addEventListener('change', () => {
+        if (cloakSwitch.checked) {
+            // Open a new blank tab with iframe
+            var newTab = window.open('about:blank', '_blank');
+            newTab.document.write('<iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen src="https://nebulax.playcode.io/index.html" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>');
+        }
+    });
+
+            // Star generation and animation logic
+function generateStars() {
+    const starsContainer = document.querySelector('.stars');
+    const starCount = 200; // Increased number of stars
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        // Random size for each star to create depth
+        const size = Math.random() * 3 + 1; // Size between 1px and 4px
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+
+        // Random position for each star
+        star.style.top = `${Math.random() * height}px`;
+        star.style.left = `${Math.random() * width}px`;
+
+        // Random opacity and animation duration
+        star.style.animationDuration = `${Math.random() * 4 + 3}s`; // Random duration between 3s and 7s
+        star.style.animationDelay = `${Math.random() * 5}s`; // Random delay before animation starts
+
+        starsContainer.appendChild(star);
+    }
+}
+
+// Call the function to generate stars when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    generateStars();
+});
+
+   document.addEventListener('DOMContentLoaded', () => {
+    const panicKeyInput = document.getElementById('panicKeyInput');
+    const panicKeyURL = document.getElementById('panicKeyURL');
+    const applyPanicKey = document.getElementById('applyPanicKey');
+    let panicKey = null;
+
+    // Apply panic key settings
+    applyPanicKey.addEventListener('click', () => {
+        const url = panicKeyURL.value.trim();
+        const key = panicKeyInput.value.trim();
+
+        // Validate that both fields are filled out
+        if (key && url) {
+            panicKey = { key, url };
+            // Store panic key and URL in localStorage
+            localStorage.setItem('panicKey', JSON.stringify(panicKey));
+            showNotification(`Panic key set to: "${key}", redirecting to ${url}`);
+        } else {
+            showNotification('Please enter both a panic key and a URL.');
+        }
+    });
+
+    // Check if the panic key is set and listen for key presses
+    const storedPanicKey = localStorage.getItem('panicKey');
+    if (storedPanicKey) {
+        panicKey = JSON.parse(storedPanicKey);
+    }
+
+    if (panicKey) {
+        // Listen for keydown events to trigger panic
+        document.addEventListener('keydown', (e) => {
+            if (e.key === panicKey.key) {
+                window.location.href = panicKey.url; // Redirect to the panic URL
+            }
+        });
+    }
+
+    // Show pop-up notification
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        // Slide in and out effect
+        setTimeout(() => notification.classList.add('show'), 10);
+        setTimeout(() => notification.classList.remove('show'), 3000);
+    }
+    
+});
+</script>
+<script src="panicKey.js"></script>
+<script src="injection.js"></script>
+<script src="performance stats.js"></script>
+<script scr="mininebula.js"></script>
+</body>
+</html>

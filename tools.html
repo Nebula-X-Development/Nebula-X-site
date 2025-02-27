@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebula X Tools</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Background & Body */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      background: radial-gradient(circle at bottom, #7c2ae8, #000);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    
+    /* Stars */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 5s infinite;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    /* Header Section */
+    .header {
+      z-index: 1;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 2.5em;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 0;
+      color: #d580ff;
+      text-shadow: 0 0 10px #d580ff;
+    }
+    .divider {
+      width: 60px;
+      border-bottom: 2px solid #d580ff;
+      margin: 10px auto 15px auto;
+    }
+    .description {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-size: 1em;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      z-index: 1;
+    }
+    
+    /* Tools Container - Glassmorphism Card Layout */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      width: 80%;
+      max-width: 1200px;
+      margin: 20px auto 0 auto;
+      z-index: 1;
+    }
+    .tool-card {
+      position: relative; /* For tooltip positioning */
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .tool-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(255, 255, 255, 0.8);
+    }
+    .tool-card i {
+      font-size: 2em;
+      margin-bottom: 8px;
+      transition: transform 0.3s ease;
+    }
+    .tool-card:hover i {
+      transform: scale(1.1);
+    }
+    .tool-card .tool-name {
+      font-size: 1em;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #d580ff;
+    }
+    /* Tooltip Styling */
+    .tooltip {
+      position: absolute;
+      bottom: calc(100% + 5px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .tool-card:hover .tooltip {
+      opacity: 1;
+    }
+    
+    /* Sidebar (Unchanged) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 100%;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transition: width 0.3s ease-in-out;
+      padding-top: 15px;
+      z-index: 10;
+      border-bottom: 2px solid #d580ff;
+    }
+    .sidebar:hover {
+      width: 70px;
+    }
+    .sidebar .logo {
+      width: 40px;
+      height: auto;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+    .sidebar .logo:hover {
+      transform: scale(1.2);
+    }
+    .sidebar .divider {
+      width: 80%;
+      border-bottom: 1px solid #d580ff;
+      margin-bottom: 15px;
+    }
+    .sidebar .nav-item {
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      color: #d580ff;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-bottom: 15px;
+    }
+    .sidebar .nav-item.selected {
+      background-color: #b34cd9;
+      border-radius: 10px;
+      color: white;
+    }
+    .sidebar .nav-item i {
+      font-size: 16px;
+    }
+    .sidebar .nav-item:hover {
+      transform: scale(1.2);
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 50px;
+      }
+      .sidebar:hover {
+        width: 70px;
+      }
+      .sidebar .nav-item {
+        font-size: 14px;
+      }
+    }
+    
+    /* Modal Styles */
+    .modal {
+      display: none; 
+      position: fixed; 
+      z-index: 100; 
+      left: 0;
+      top: 0;
+      width: 100%; 
+      height: 100%; 
+      overflow: auto; 
+      background-color: rgba(0, 0, 0, 0.7); 
+    }
+    .modal-content {
+      background-color: #1c1c1c;
+      margin: 10% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; 
+      max-width: 600px;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover,
+    .close:focus {
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    /* Info Icon */
+    .info-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 110;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #d580ff;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .info-icon:hover {
+      transform: scale(1.1);
+    }
+    .info-icon i {
+      font-size: 24px;
+      color: #d580ff;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  
+  <!-- Header Section -->
+  <div class="header">
+    <h1>Nebula X Tools</h1>
+    <div class="divider"></div>
+    <div class="description">
+      Tools and utilities for advanced explorers of the digital cosmos.
+    </div>
+  </div>
+  
+  <!-- Tools Container with Glassmorphism Cards -->
+  <div class="container">
+    <div class="tool-card" onclick="location.href='encoder.html'">
+      <i class="fa fa-code"></i>
+      <div class="tool-name">Encoder/Decoder</div>
+      <div class="tooltip">Encode/Decode messages and send them to your friends!</div>
+    </div>
+    <div class="tool-card" onclick="location.href='injector.html'">
+      <i class="fa fa-terminal"></i>
+      <div class="tool-name">JS Injector</div>
+      <div class="tooltip">Inject JS code into an About:Blank window</div>
+    </div>
+    <div class="tool-card">
+      <i class="fa fa-spinner"></i>
+      <div class="tool-name">Coming Soon...</div>
+      <div class="tooltip">Coming Soon</div>
+    </div>
+    <div class="tool-card">
+      <i class="fa fa-spinner"></i>
+      <div class="tool-name">Coming Soon...</div>
+      <div class="tooltip">Coming Soon</div>
+    </div>
+    <div class="tool-card">
+      <i class="fa fa-spinner"></i>
+      <div class="tool-name">Coming Soon...</div>
+      <div class="tooltip">Coming Soon</div>
+    </div>
+    <div class="tool-card">
+      <i class="fa fa-spinner"></i>
+      <div class="tool-name">Coming Soon...</div>
+      <div class="tooltip">Coming Soon</div>
+    </div>
+    <div class="tool-card">
+      <i class="fa fa-spinner"></i>
+      <div class="tool-name">Coming Soon...</div>
+      <div class="tooltip">Coming Soon</div>
+    </div>
+  </div>
+  
+  <!-- Sidebar (Unchanged) -->
+  <div class="sidebar">
+    <a href="index.html" class="logo-link">
+      <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo">
+    </a>
+    <div class="divider"></div>
+    <div class="nav-item"><a href="index.html"><i class="fa fa-home" style="color:#d580ff;"></i></a></div>
+    <div class="nav-item"><a href="search.html"><i class="fa fa-search" style="color:#d580ff;"></i></a></div>
+    <div class="nav-item selected"><a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:white;"></i></a></div>
+    <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></div>
+    <div class="divider"></div>
+    <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info" style="color:#d580ff;"></i></a></div>
+    <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></a></div>
+  </div>
+  
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+<h2>About Nebula X Tools</h2>
+<p>
+  Welcome to <strong>Nebula X Tools</strong>, your gateway to a suite of advanced utilities designed for digital explorers. Our platform is built for power users who demand flexibility, precision, and state-of-the-art functionality. Each tool is crafted with performance and security in mind, ensuring that you can accomplish complex tasks with ease.
+</p>
+<p>
+  <strong>Tool Descriptions:</strong>
+  <ul>
+    <li><strong>Encoder/Decoder:</strong> Encode and decode data in multiple formats. Secure your communications and protect sensitive information with ease.</li>
+    <li><strong>JS Injector:</strong> Dynamically inject JavaScript into web pages. Ideal for testing, customization, and rapid development.</li>
+    <li><strong>Coming Soon Tools:</strong> We’re continuously expanding our suite with innovative utilities to further enhance your digital experience. Stay tuned for new features!</li>
+  </ul>
+</p>
+<p>
+  <strong>How to Use:</strong> Simply click on a tool to open its interface. Each utility is designed with a user-friendly layout while still offering advanced functionalities for experienced users. Detailed documentation and guidelines are available for each tool to help you get started.
+</p>
+<p>
+  <strong>Usage Guidelines and Responsibilities:</strong>
+  <ul>
+    <li><em>Security:</em> Use these tools responsibly. Ensure that you understand the security implications of encoding, decoding, or injecting code.</li>
+    <li><em>Privacy:</em> Handle your data with care. Although we do not store your data, it is your responsibility to protect sensitive information.</li>
+    <li><em>Ethical Use:</em> These utilities are intended for legitimate and ethical use only. Unauthorized use or misuse may lead to legal consequences.</li>
+    <li><em>Updates and Support:</em> Our development team is continuously enhancing the platform. Please refer to our official guidelines and support channels for the latest updates and assistance.</li>
+  </ul>
+</p>
+<p>
+  <strong>Our Vision:</strong> Nebula X Tools is more than just a collection of utilities—it's a vision for the future of digital interaction. By empowering users with advanced yet intuitive tools, we aim to foster creativity, innovation, and responsible exploration in the digital realm.
+</p>
+<p>
+  Thank you for choosing Nebula X Tools. We hope our utilities inspire and empower you on your digital journey!
+</p>
+    </div>
+  </div>
+  
+  <!-- Info Icon -->
+  <div id="infoIcon" class="info-icon">
+    <i class="fa fa-question-circle"></i>
+  </div>
+  
+  <!-- Stars JavaScript (Unchanged) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const starsContainer = document.querySelector('.stars');
+      const totalStars = 400;
+      for (let i = 0; i < totalStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+        starsContainer.appendChild(star);
+      }
+    });
+  </script>
+  
+  <!-- Modal JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const modal = document.getElementById("aboutModal");
+      const infoIcon = document.getElementById("infoIcon");
+      const closeBtn = document.querySelector(".close");
+
+      infoIcon.addEventListener("click", function() {
+        modal.style.display = "block";
+      });
+
+      closeBtn.addEventListener("click", function() {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
+     document.addEventListener('DOMContentLoaded', () => {
+      const savedTabCloak = localStorage.getItem('tabCloak');
+      if (savedTabCloak) {
+          const { title, icon } = JSON.parse(savedTabCloak);
+          updateTab(title, icon);
+      }
+  });
+
+  function updateTab(title, icon) {
+      document.title = title;
+      updateFavicon(icon);
+  }
+
+  function updateFavicon(iconURL) {
+      setTimeout(() => { // Delay to ensure DOM is ready
+          // Remove existing favicons
+          document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+          // Create and append new favicon
+          const newFavicon = document.createElement("link");
+          newFavicon.rel = "icon";
+          newFavicon.type = "image/x-icon";
+          newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+          document.head.appendChild(newFavicon);
+
+          console.log("Favicon updated to:", newFavicon.href);
+      }, 100); // Small delay to avoid execution conflicts
+  }
+  </script>
+  <script src="panicKey.js"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nebula-X</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(circle at bottom, #7c2ae8, #000);
+      color: white;
+      font-family: Arial, sans-serif;
+      position: relative;
+      overflow: hidden; /* Prevent body from scrolling */
+    }
+
+    .background {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 5s infinite;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 50px;
+      height: 100%;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transition: width 0.3s ease-in-out;
+      padding-top: 15px;
+      z-index: 10;
+      border-bottom: 2px solid #d580ff;
+    }
+
+    .sidebar:hover {
+      width: 70px;
+    }
+
+    .sidebar .logo {
+      width: 40px;
+      height: auto;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar .logo:hover {
+      transform: scale(1.2);
+    }
+
+    .sidebar .divider {
+      width: 80%;
+      border-bottom: 1px solid #d580ff;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .nav-item {
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      color: #d580ff;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin-bottom: 15px;
+    }
+
+    .sidebar .nav-item.selected {
+      background-color: #b34cd9;
+      border-radius: 10px;
+      color: white;
+    }
+
+    .sidebar .nav-item i {
+      font-size: 16px;
+    }
+
+    .sidebar .nav-item:hover {
+      transform: scale(1.2);
+      color: white;
+    }
+
+    /* About Page Styles */
+    .about-container {
+      margin-left: 80px;
+      margin-top: 40px;
+      max-width: 1200px;
+      padding: 30px;
+      z-index: 5;
+      position: relative;
+      overflow-y: auto; /* Allow scrolling only within the about-container */
+      max-height: calc(100vh - 40px); /* Adjust to prevent overflow */
+    }
+
+    .about-title {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #d580ff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #d580ff;
+      margin-bottom: 20px;
+    }
+
+    .section-content {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #e0e0e0;
+    }
+
+    .call-to-action {
+      text-align: center;
+      padding: 40px;
+      background-color: #d58ff;
+      border-radius: 15px;
+      margin-top: 30px;
+    }
+
+    .cta-button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #000;
+      color: #d580ff;
+      border-radius: 50px;
+      border: 2px solid #d580ff;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #d580ff;
+      color: #000;
+    }
+
+    .cta-button:focus {
+      outline: none;
+    }
+
+    .faq-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .faq-section li {
+      margin-bottom: 15px;
+    }
+
+    .faq-section li a {
+      color: #d580ff;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .faq-section li a:hover {
+      color: white;
+    }
+
+    .faq-section li i {
+      margin-right: 10px;
+    }
+
+    /* Add scroll effect */
+    .about-container {
+      max-height: 100vh;
+      overflow-y: scroll;
+    }
+
+    .section.fade {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .next-btn:hover {
+      background-color: #b34cd9;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background">
+    <div class="stars"></div>
+    <!-- Stars background -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Logo -->
+      <a href="index.html" class="logo-link">
+        <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo" />
+      </a>
+
+      <div class="divider"></div>
+
+      <!-- Sidebar Navigation Items -->
+      <div class="nav-item">
+        <a href="index.html"><i class="fa fa-home" style="color:#d580ff;"></i></a>
+      </div>
+      <div class="nav-item">
+        <a href="search.html"><i class="fa fa-search" style="color:#d580ff;"></i></a>
+      </div>
+<div class="nav-item">
+  <a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a>
+</div>
+      <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></a></div>
+      <div class="divider"></div>
+      <div class="nav-item selected">
+        <a href="aboutpage.html"><i class="fa fa-circle-info" style="color:white;"></i></a>
+      </div>
+      <div class="nav-item">
+        <a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></a>
+      </div>
+    </div>
+
+    <!-- About Page Content -->
+    <div class="about-container">
+      <h1 class="about-title">About Nebula-X</h1>
+
+      <!-- About Section -->
+      <div class="section">
+        <h2 class="section-title">What is Nebula-X</h2>
+        <p class="section-content">
+          Nebula-X is an innovative platform currently in beta. Our goal is to provide an immersive space for gaming and web proxy services.
+          With its sleek design and modern features, Nebula-X is set to redefine user experience in its field. 
+          We're excited to continue adding more features and games as we evolve!
+        </p>
+      </div>
+
+      <!-- Features Section -->
+      <div class="section">
+        <h2 class="section-title">Features</h2>
+        <p class="section-content">
+          Nebula-X offers a variety of exciting features, including:
+          <ul>
+            <li>Interactive Game Pages</li>
+            <li>Customizable Settings</li>
+            <li>Performance Mode Toggle</li>
+            <li>About:Blank Cloak for seamless browsing</li>
+          </ul>
+        </p>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <ul>
+          <li><i class="fa fa-question-circle"></i><a href="#">How do I get started with Nebula-X?</a></li>
+          <li><i class="fa fa-question-circle"></i><a href="#">What features are available in the beta?</a></li>
+          <li><i class="fa fa-question-circle"></i><a href="#">How can I contact support?</a></li>
+        </ul>
+      </div>
+
+      <!-- Call-to-Action -->
+      <div class="call-to-action">
+        <p>Need more support? Check out our Github</p>
+        <a href="https://github.com/Nebula-X-Development" class="cta-button">Github</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+   // Star background animation
+document.addEventListener('DOMContentLoaded', () => {
+  const starsContainer = document.querySelector('.stars');
+  const totalStars = 400;
+
+  // Generate stars
+  for (let i = 0; i < totalStars; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 5}s`;
+    star.style.animationDuration = `${2 + Math.random() * 3}s`;
+    starsContainer.appendChild(star);
+  }
+});
+
+  document.addEventListener('DOMContentLoaded', () => {
+      const savedTabCloak = localStorage.getItem('tabCloak');
+      if (savedTabCloak) {
+          const { title, icon } = JSON.parse(savedTabCloak);
+          updateTab(title, icon);
+      }
+  });
+
+  function updateTab(title, icon) {
+      document.title = title;
+      updateFavicon(icon);
+  }
+
+  function updateFavicon(iconURL) {
+      setTimeout(() => { // Delay to ensure DOM is ready
+          // Remove existing favicons
+          document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+          // Create and append new favicon
+          const newFavicon = document.createElement("link");
+          newFavicon.rel = "icon";
+          newFavicon.type = "image/x-icon";
+          newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+          document.head.appendChild(newFavicon);
+
+          console.log("Favicon updated to:", newFavicon.href);
+      }, 100); // Small delay to avoid execution conflicts
+  }
+</script>
+<script src="panicKey.js"></script>
+</body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder/Decoder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(circle at bottom, #7c2ae8, #000);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+}
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+
+.container {
+    background-color: #1a0138;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 16px rgba(255, 0, 255, 0.2);
+    width: 600px;
+    text-align: center;
+    position: relative;
+    border: 5.5px solid #8b5cf6;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+.frequency-container {
+    margin-bottom: 10px;
+    color: #f8e8ff;
+    text-align: left;
+}
+
+#frequencySlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    border-radius: 5px;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity .15s ease-in-out;
+}
+
+#frequencySlider:hover {
+    opacity: 1;
+}
+
+#frequencySlider::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ff00ff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.6);
+    transition: background-color 0.3s ease;
+}
+
+#frequencySlider::-webkit-slider-thumb:hover {
+    background: #ff66ff;
+}
+
+button {
+    padding: 12px 110px;
+    margin: 5px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    color: #f8e8ff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+}
+
+h2, h3, h4 {
+    color: #e0b3ff;
+}
+
+textarea, input[type="text"] {
+    width: 90%;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 3px solid #8b5cf6;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #290349;
+    resize: none;
+    transition: box-shadow 0.3s ease;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.6);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-content {
+    background-color: #1a0138;
+    border-radius: 15px;
+    padding: 15px 20px;
+    width: 480px;
+    text-align: center;
+    color: #f8e8ff;
+    border: 5.5px solid #8b5cf6;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+}
+
+
+      .modal-content {
+        background-color: #2d3339;
+        border-radius: 15px;
+        padding: 15px 20px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+        color: #f0f0f0;
+        max-height: 80vh;
+        overflow-y: auto;
+        border: 5.5px solid #4f5964;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000000000000000000000000000000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .modal-content {
+          width: 95%;
+          max-width: 350px;
+          padding: 10px;
+        }
+      }
+
+      .modal-close {
+        color: #f0f0f0;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: -3px;
+      }
+
+      .modal-close:hover,
+      .modal-close:focus {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+.return-home {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    padding: 10px 18px;
+    background: rgba(128, 0, 255, 0.7); /* Semi-transparent purple */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(128, 0, 255, 0.8);
+    transition: all 0.3s ease-in-out;
+}
+
+.return-home:hover {
+    background: rgba(128, 0, 255, 1); /* Brighter purple on hover */
+    box-shadow: 0 0 15px rgba(128, 0, 255, 1);
+    transform: scale(1.05);
+}
+
+    </style>
+  </head>
+  <body>
+  <body>
+  <div class="stars"></div>
+  <!-- Your other HTML content -->
+
+  <a href="tools.html" class="return-home">⟵ Return to Tools</a>
+    <div id="historyModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeHistoryModal()">&times;</span>
+        <h3>&nbsp&nbspHelp Desk (scroll for more)</h3>
+        <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+        <label>hi there!</label>
+        <br>
+        <br> NEBULA-X TAKES NO CREDIT FOR THE CREATION OF THIS AND ALL CRIDIT RIGHTFULLY GOES TO dinguschan-owo. please go check out their github. <p>
+          <b>───────────────────────────────────────────</b>
+        <label>this a a neat little encoder/decoder tool made by dinguschan (dinguschan-owo!) use it to send secret messages to ur friends! by default it uses 9 encoding methods stacked on top of each other, which you can look at (and modify) in the settings popup ( <i class="fas fa-cog"></i> ) <br>
+          <br>this makes ur messages <i>super</i> &nbsphard to decode and read! and yes, your school admins can (and will) look at your chat messages sent on administration owned devices. encode your messages so they can't, or just don't send messages from those devices. remember kids, abstaination is the best form of prevention :D </label>
+        <br>
+        <br>you can even add a custom key to make it even harder to crack, but make sure that ur key is only one word long, or it will break your message (ill fix it later, i promise :3) by default the key is "KEYWORD" so make sure your key is something different to make your messages harder to crack. <br>
+        <br>if you want to turn off some encoding methods, just go into settings and flip the switch off for whichever method u don't like. you can also change the frequency of dead character injection (characters that don't translate to anything and are only used to jumble messages more) <br>
+        <br>please note that even though there are options to open this project in a cloaked tab, the function itself is kinda broken at the moment. you can still try, but there will be issues. im working on it. <br>
+        <br>ok! thats all! go use this cool little tool now! also please share it with ur friends cause it really helps me a lot, i promise :3. <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+      </div>
+    </div>
+    <div class="container">
+      <h2>Encoder/Decoder</h2>
+      <h4> 𝙼𝚊𝚍𝚎 𝚋𝚢 𝚍𝚒𝚗𝚐𝚞𝚜𝚌𝚑𝚊𝚗! </h4>
+      <button class="settings-button" onclick="openModal()">
+        <i class="fas fa-cog"></i>
+      </button>
+      <button class="git-button" onclick="openGit()">
+        <i class="fa-brands fa-github"></i>
+      </button>
+     
+      <button class="history-button" onclick="openHistoryModal()">
+        <i class="fa-solid fa-question"></i>
+      </button>
+      <div class="input-container">
+        <textarea id="inputMessage" placeholder="Enter your message here..."></textarea>
+        <button class="clear-button" onclick="clearInput()">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+      <div class="input-container">
+        <input type="text" id="vigenereKey" class="vigenere-key" placeholder="Custom key: (One word)" oninput="validateKey()">
+        <i class="indicator" id="keyIndicator"></i>
+      </div>
+      <div>
+        <button onclick="encodeMessage()">Encode</button>
+        <button onclick="decodeMessage()">Decode</button>
+      </div>
+      <textarea id="outputMessage" placeholder="Output will appear here..." readonly></textarea>
+      <button class="copy-button" onclick="copyOutput()">
+        <i class="fa-solid fa-copy"></i>
+      </button>
+      <div class="status-message" id="statusMessage"></div>
+    </div>
+    <div id="settingsModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <h3>&nbsp&nbspSettings (scroll for more)</h3>
+        <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+        <div class="toggle-container">
+          <label>Caesar Cipher <div class="toggle-switch">
+              <input type="checkbox" id="toggleCaesar" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Octal <div class="toggle-switch">
+              <input type="checkbox" id="toggleOctal" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Hexadecimal <div class="toggle-switch">
+              <input type="checkbox" id="toggleHex" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Binary <div class="toggle-switch">
+              <input type="checkbox" id="toggleBinary" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Base64 <div class="toggle-switch">
+              <input type="checkbox" id="toggleBase64" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>ROT13 <div class="toggle-switch">
+              <input type="checkbox" id="toggleRot13" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Vigenère Cipher <div class="toggle-switch">
+              <input type="checkbox" id="toggleVigenere" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Atbash <div class="toggle-switch">
+              <input type="checkbox" id="toggleAtbash" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+          <label>Dead Characters <div class="toggle-switch">
+              <input type="checkbox" id="toggleDeadLetters" checked>
+              <span class="slider"></span>
+            </div>
+          </label>
+        </div>
+        <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+        <div class="frequency-container">
+          <label for="frequencySlider">Dead Character Frequency:</label>
+          <input type="range" id="frequencySlider" min="1" max="10" value="1">
+          <br>
+          <br>
+          <span>&nbspEvery other character&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspEvery 10 characters</span>
+        </div>
+        <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+        <button class="blob-button" onclick="createBlobUrl()">&nbspOpen blob:&nbsp <i class="fa-solid fa-up-right-from-square"></i>
+        </button>
+        <button class="blank-button" onclick="openInBlankTab()">&nbspOpen about:blank&nbsp <i class="fa-solid fa-up-right-from-square"></i>
+        </button>
+        <p>
+          <b>───────────────────────────────────────────</b>
+        </p>
+      </div>
+    </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const starsContainer = document.querySelector('.stars');
+    const totalStars = 400;
+
+    for (let i = 0; i < totalStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 5}s`;
+        star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+        starsContainer.appendChild(star);
+    }
+});
+
+      function validateKey() {
+        const key = document.getElementById('vigenereKey').value.trim();
+        const indicator = document.getElementById('keyIndicator');
+        if (key.split(' ').length > 1) {
+          indicator.innerHTML = ' < i class = "fas fa-times-circle" >< /i>';
+          indicator.style.color = '#ff5c5c';
+        } else {
+          indicator.innerHTML = ' < i class = "fa-solid fa-circle-check" >< /i>';
+          indicator.style.color = '#21d498';
+        }
+      }
+
+      function encodeMessage() {
+        const key = document.getElementById('vigenereKey').value.trim();
+        if (key.split(' ').length > 1) {
+          showMessage('Custom key must be one word to work properly', 'error');
+          return;
+        }
+        try {
+          const inputMessage = document.getElementById('inputMessage').value;
+          const vigenereKey = key || 'KEYWORD';
+          let encodedMessage = inputMessage;
+          if (document.getElementById('toggleCaesar').checked) {
+            encodedMessage = caesarEncode(encodedMessage);
+          }
+          if (document.getElementById('toggleVigenere').checked) {
+            encodedMessage = vigenereEncode(encodedMessage, vigenereKey);
+          }
+          if (document.getElementById('toggleOctal').checked) {
+            encodedMessage = octalEncode(encodedMessage);
+          }
+          if (document.getElementById('toggleHex').checked) {
+            encodedMessage = hexEncode(encodedMessage);
+          }
+          if (document.getElementById('toggleBinary').checked) {
+            encodedMessage = binaryEncode(encodedMessage);
+          }
+          if (document.getElementById('toggleBase64').checked) {
+            encodedMessage = base64Encode(encodedMessage);
+          }
+          if (document.getElementById('toggleRot13').checked) {
+            encodedMessage = rot13Encode(encodedMessage);
+          }
+          if (document.getElementById('toggleAtbash').checked) {
+            encodedMessage = atbashEncode(encodedMessage);
+          }
+          if (document.getElementById('toggleDeadLetters').checked) {
+            encodedMessage = injectDeadLetters(encodedMessage);
+          }
+          document.getElementById('outputMessage').value = encodedMessage;
+          showMessage('Message encoded successfully', 'success');
+        } catch (error) {
+          showMessage('An error occurred during encoding', 'error');
+        }
+      }
+
+      function decodeMessage() {
+        const key = document.getElementById('vigenereKey').value.trim();
+        if (key.split(' ').length > 1) {
+          showMessage('Custom key must be one word to work properly', 'error');
+          return;
+        }
+        try {
+          const inputMessage = document.getElementById('inputMessage').value;
+          const vigenereKey = key || 'KEYWORD';
+          let decodedMessage = inputMessage;
+          if (document.getElementById('toggleDeadLetters').checked) {
+            decodedMessage = removeDeadLetters(decodedMessage);
+          }
+          if (document.getElementById('toggleAtbash').checked) {
+            decodedMessage = atbashDecode(decodedMessage);
+          }
+          if (document.getElementById('toggleRot13').checked) {
+            decodedMessage = rot13Decode(decodedMessage);
+          }
+          if (document.getElementById('toggleBase64').checked) {
+            decodedMessage = base64Decode(decodedMessage);
+          }
+          if (document.getElementById('toggleBinary').checked) {
+            decodedMessage = binaryDecode(decodedMessage);
+          }
+          if (document.getElementById('toggleHex').checked) {
+            decodedMessage = hexDecode(decodedMessage);
+          }
+          if (document.getElementById('toggleOctal').checked) {
+            decodedMessage = octalDecode(decodedMessage);
+          }
+          if (document.getElementById('toggleVigenere').checked) {
+            decodedMessage = vigenereDecode(decodedMessage, vigenereKey);
+          }
+          if (document.getElementById('toggleCaesar').checked) {
+            decodedMessage = caesarDecode(decodedMessage);
+          }
+          document.getElementById('outputMessage').value = decodedMessage;
+        } catch (error) {
+          showMessage('An error occurred during decoding', 'error');
+        }
+      }
+
+      function clearInput() {
+        document.getElementById('inputMessage').value = '';
+        document.getElementById('outputMessage').value = '';
+        showMessage('Input and output cleared', '#ffff66');
+      }
+
+      function copyOutput() {
+        const outputMessage = document.getElementById('outputMessage');
+        outputMessage.select();
+        outputMessage.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        showMessage('Output copied to clipboard', '#ffff66');
+      }
+
+      function showMessage(message, type) {
+        const statusMessage = document.getElementById('statusMessage');
+        statusMessage.textContent = message;
+        statusMessage.style.color = type === 'error' ? '#ff5c5c' : (type === '#ffff66' ? '#ffff66' : '#21d498');
+        setTimeout(() => {
+          statusMessage.textContent = '';
+        }, 3000);
+      }
+
+      function openModal() {
+        document.getElementById('settingsModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        document.getElementById('settingsModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function caesarEncode(str, shift = 3) {
+        return str.replace(/[a-z]/gi, char => {
+          const start = char <= 'Z' ? 65 : 97;
+          return String.fromCharCode(((char.charCodeAt(0) - start + shift) % 26) + start);
+        });
+      }
+
+      function caesarDecode(str, shift = 3) {
+        return caesarEncode(str, 26 - shift);
+      }
+
+      function vigenereEncode(plainText, key) {
+        return vigenere(plainText, key, 'encode');
+      }
+
+      function vigenereDecode(cipherText, key) {
+        return vigenere(cipherText, key, 'decode');
+      }
+
+      function vigenere(text, key, mode) {
+        const isEncode = mode === 'encode';
+        key = key.toUpperCase();
+        let result = '';
+        let j = 0;
+        for (let i = 0; i < text.length; i++) {
+          const c = text.charCodeAt(i);
+          if (65 <= c && c <= 90) {
+            result += String.fromCharCode((c - 65 + (isEncode ? key.charCodeAt(j % key.length) - 65 : 26 - (key.charCodeAt(j % key.length) - 65))) % 26 + 65);
+            j++;
+          } else if (97 <= c && c <= 122) {
+            result += String.fromCharCode((c - 97 + (isEncode ? key.charCodeAt(j % key.length) - 65 : 26 - (key.charCodeAt(j % key.length) - 65))) % 26 + 97);
+            j++;
+          } else {
+            result += text.charAt(i);
+          }
+        }
+        return result;
+      }
+
+      function octalEncode(str) {
+        return str.split('').map(char => char.charCodeAt(0).toString(8)).join(' ');
+      }
+
+      function octalDecode(str) {
+        return str.split(' ').map(char => String.fromCharCode(parseInt(char, 8))).join('');
+      }
+
+      function hexEncode(str) {
+        return str.split('').map(char => char.charCodeAt(0).toString(16)).join(' ');
+      }
+
+      function hexDecode(str) {
+        return str.split(' ').map(char => String.fromCharCode(parseInt(char, 16))).join('');
+      }
+
+      function binaryEncode(str) {
+        return str.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+      }
+
+      function binaryDecode(str) {
+        return str.split(' ').map(char => String.fromCharCode(parseInt(char, 2))).join('');
+      }
+
+      function base64Encode(str) {
+        return btoa(str).replace(/=+$/, '');
+      }
+
+      function base64Decode(str) {
+        return atob(str);
+      }
+
+      function rot13Encode(str) {
+        return str.replace(/[a-z]/gi, char => {
+          const start = char <= 'Z' ? 65 : 97;
+          return String.fromCharCode(((char.charCodeAt(0) - start + 13) % 26) + start);
+        });
+      }
+
+      function rot13Decode(str) {
+        return rot13Encode(str);
+      }
+
+      function atbashEncode(str) {
+        return str.replace(/[a-z]/gi, char => {
+          const start = char <= 'Z' ? 65 : 97;
+          return String.fromCharCode(start + 25 - (char.charCodeAt(0) - start));
+        });
+      }
+
+      function atbashDecode(str) {
+        return atbashEncode(str);
+      }
+
+      function injectDeadLetters(str) {
+        const frequencyValue = document.getElementById('frequencySlider').value;
+        let result = '';
+        for (let i = 0; i < str.length; i++) {
+          result += str[i];
+          if ((i + 1) % frequencyValue === 0) {
+            result += getRandomDeadLetter();
+          }
+        }
+        return result;
+      }
+
+      function removeDeadLetters(str) {
+        const frequencyValue = parseInt(document.getElementById('frequencySlider').value);
+        let result = '';
+        let counter = 0;
+        for (let i = 0; i < str.length; i++) {
+          if ((counter + 1) % (frequencyValue + 1) === 0) {
+            counter = 0;
+          } else {
+            result += str[i];
+            counter++;
+          }
+        }
+        return result;
+      }
+
+      function getRandomDeadLetter() {
+        const alphabet = '1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm';
+        return alphabet[Math.floor(Math.random() * alphabet.length)];
+      }
+
+      function createBlobUrl() {
+        var outerHTML = document.documentElement.outerHTML;
+        var blob = new Blob([outerHTML], {
+          type: 'text/html'
+        });
+        var blobUrl = URL.createObjectURL(blob);
+        var newTab = window.open();
+        newTab.document.write(' < !DOCTYPE html >< html >< head >< title > Page Content < /title>< /head>< body >< /body>< /html>');
+        newTab.document.close();
+        newTab.location.href = blobUrl;
+      }
+
+      function openInBlankTab() {
+        const outerHTML = document.documentElement.outerHTML;
+        const newTab = window.open("about:blank");
+        newTab.document.write(outerHTML);
+        newTab.document.close();
+      }
+
+      function openHistoryModal() {
+        document.getElementById('historyModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeHistoryModal() {
+        document.getElementById('historyModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function openGit() {
+        window.open('https://github.com/dinguschan-owo/Encrypter-Decrypter', '_blank');
+      }
+
+      function openWeb() {
+        window.open('https://encoder-decoder-nine.vercel.app/', '_blank');
+      }
+      </script>
+       <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const modal = document.getElementById("aboutModal");
+      const infoIcon = document.getElementById("infoIcon");
+      const closeBtn = document.querySelector(".close");
+
+      infoIcon.addEventListener("click", function() {
+        modal.style.display = "block";
+      });
+
+      closeBtn.addEventListener("click", function() {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    });
+     document.addEventListener('DOMContentLoaded', () => {
+      const savedTabCloak = localStorage.getItem('tabCloak');
+      if (savedTabCloak) {
+          const { title, icon } = JSON.parse(savedTabCloak);
+          updateTab(title, icon);
+      }
+  });
+
+  function updateTab(title, icon) {
+      document.title = title;
+      updateFavicon(icon);
+  }
+
+  function updateFavicon(iconURL) {
+      setTimeout(() => { // Delay to ensure DOM is ready
+          // Remove existing favicons
+          document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+          // Create and append new favicon
+          const newFavicon = document.createElement("link");
+          newFavicon.rel = "icon";
+          newFavicon.type = "image/x-icon";
+          newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+          document.head.appendChild(newFavicon);
+
+          console.log("Favicon updated to:", newFavicon.href);
+      }, 100); // Small delay to avoid execution conflicts
+  }
+    </script>
+    <script src="panicKey.js"></script>
+  </body>
+</html>
