@@ -1,15 +1,20 @@
 {
-  "name": "Nebula X",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash"
+  "name": "Nebula X Development Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:latest", 
+  "features": {
+    "nodejs": "latest",
+    "docker-in-docker": "latest"
   },
   "extensions": [
-    "ms-vscode-remote.remote-containers",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode"
   ],
-  "postCreateCommand": "npm install"
+  "postCreateCommand": "npm install",
+  "forwardPorts": [3000],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder}/.vscode,target=/workspace/.vscode,type=bind"
+  ]
 }
