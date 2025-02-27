@@ -1,0 +1,14 @@
+{
+  "name": "nebula-x",
+  "version": "1.0.0",
+  "description": "Nebula X web proxy",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.0.1"
+  }
+}
