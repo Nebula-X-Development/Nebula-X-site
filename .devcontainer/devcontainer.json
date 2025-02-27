@@ -1,12 +1,15 @@
 {
-  "name": "Nebula X Development Environment",
-  "dockerFile": "Dockerfile",
-  "context": "..",
+  "name": "Nebula X",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
   "extensions": [
-    "dbaeumer.vscode-eslint", 
+    "ms-vscode-remote.remote-containers",
+    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode"
-  ]
+  ],
+  "postCreateCommand": "npm install"
 }
