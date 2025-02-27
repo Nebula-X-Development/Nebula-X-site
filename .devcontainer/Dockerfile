@@ -1,23 +1,11 @@
-# Use an official Node.js runtime as a parent image
-FROM node:16
+# Use Node.js base image for development
+FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:latest
 
-# Set the working directory in the container
-WORKDIR /app
+# Install any additional dependencies you may need
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the package.json and package-lock.json
-COPY package*.json ./
-
-# Install any needed packages
-RUN npm install
-
-# Bundle the app source
-COPY . .
-
-# Make port 3000 available to the world outside the container
-EXPOSE 3000
-
-# Define environment variable
-ENV NODE_ENV=production
-
-# Run the app when the container launches
-CMD ["npm", "start"]
+# Set the working directory to the workspace folder
+WORKDIR /workspace
