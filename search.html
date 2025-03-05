@@ -181,24 +181,32 @@
 <div class="nav-item">
   <a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a>
 </div>
-            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></div>
+            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></a></div>
 
             <div class="divider"></div>
 
-            <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info "style="color:#d580ff;"></i></div>
-            <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></div>
+                <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info" style="color:#d580ff;"></i></a></div>
+                <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></a></div>
+
         </div>
 
-        <!-- Search Form -->
         <div class="search-container">
-            <h1>Explore the Web Beyond the Stars  </h1>
-            <p> (PROXY CURRENTLY IS NOT FUNCTIONAL!!)
-            <form action="/proxy" method="POST" class="search-box">
-                <input type="text" id="search-input" name="query" placeholder="Enter URL..." required>
+            <h1>Explore the Web Beyond the Stars</h1>
+            <p id="uv-error"></p>
+            <pre id="uv-error-code"></pre>
+            <form class="search-box" id="uv-form">
+                <input id="uv-search-engine" value="https://www.duckduckgo.com/%s" type="hidden"/> 
+                <input type="text" id="uv-address" name="query" placeholder="Search with DuckDuckGo or Enter URL..." required>
                 <button type="submit"><i class="fa fa-arrow-right"></i></button>
             </form>
         </div>
     </div>
+
+    <script src="active/uv/uv.bundle.js" charset="UTF-8" defer></script>
+    <script src="active/uv/uv.config.js" charset="UTF-8" defer></script>
+    <script src="active/register-sw.js" charset="UTF-8" defer></script>
+    <script src="active/search.js" charset="UTF-8" defer></script>
+    <script src="active/index.js" charset="UTF-8" defer></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
