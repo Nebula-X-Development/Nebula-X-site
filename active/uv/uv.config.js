@@ -1,5 +1,5 @@
 self.__uv$config = {
-    prefix: '/active/go/',
+    prefix: '/Nebula-X-UV/active/go/',
     bare:'https://nebula-x.above.gay/bare/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
