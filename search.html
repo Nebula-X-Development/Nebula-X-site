@@ -254,7 +254,8 @@
         // Use DuckDuckGo as the search template
         const url = search(input, "https://duckduckgo.com/?q=%s");
         // Base64 encode the resulting URL and redirect to embed.html with the encoded 'h' parameter
-        window.location.href = "embed.html?h=" + url;
+        const encodedUrl = btoa(url);
+        window.location.href = "embed.html?h=" + encodedUrl;
       });
     </script>
 
