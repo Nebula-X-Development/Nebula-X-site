@@ -155,7 +155,7 @@
     const embedElement = document.getElementById('embed-embed');
     if (h) {
       try {
-        const decodedUrl = atob(h);
+        const encodedUrl = btoa(h);
         // Customizable table of URL prefixes for direct embedding.
         const directEmbedList = [
           "https://example.com",
@@ -163,11 +163,11 @@
           "https://mycustomsite.org"
         ];
         // Determine whether to embed directly or via embed.frogiee.one
-        const useDirectEmbed = directEmbedList.some(prefix => decodedUrl.startsWith(prefix));
+        const useDirectEmbed = directEmbedList.some(prefix => h.startsWith(prefix));
         if (useDirectEmbed) {
-          embedElement.src = decodedUrl;
+          embedElement.src = h;
         } else {
-          embedElement.src = 'https://nx.above.gay/active/go/' + h;
+          embedElement.src = 'https://nx.above.gay/active/go/' + encodedUrl;
         }
       } catch (error) {
         console.error("Error decoding base64 parameter:", error);
