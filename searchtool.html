@@ -350,21 +350,37 @@
         document.getElementById("popup").style.display = "none";
       })
       
-      function updateFavicon(iconURL) {
-          setTimeout(() => { // Delay to ensure DOM is ready
-              // Remove existing favicons
-              document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+            document.addEventListener('DOMContentLoaded', () => {
+    const savedTabCloak = localStorage.getItem('tabCloak');
+    if (savedTabCloak) {
+        const { title, icon } = JSON.parse(savedTabCloak);
+        updateTab(title, icon);
+    }
+});
 
-              // Create and append new favicon
-              const newFavicon = document.createElement("link");
-              newFavicon.rel = "icon";
-              newFavicon.type = "image/x-icon";
-              newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
-              document.head.appendChild(newFavicon);
+function updateTab(title, icon) {
+    document.title = title;
+    if (icon) {
+        updateFavicon(icon);
+    }
+}
 
-              console.log("Favicon updated to:", newFavicon.href);
-          }, 100); // Small delay to avoid execution conflicts
-      }
+function updateFavicon(iconURL) {
+    setTimeout(() => { 
+        // Remove existing favicons
+        document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+        // Create and append new favicon
+        const newFavicon = document.createElement("link");
+        newFavicon.rel = "icon";
+        newFavicon.type = "image/x-icon";
+        newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+        document.head.appendChild(newFavicon);
+
+        console.log("Favicon updated to:", newFavicon.href);
+    }, 100); // Small delay to ensure DOM is ready
+}
+
     </script>
     <script src="panicKey.js"></script>
   </body>
