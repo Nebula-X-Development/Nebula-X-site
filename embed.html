@@ -40,10 +40,10 @@
       50% { opacity: 1; }
       100% { opacity: 0; }
     }
-    /* Flex container for sidebar and embed */
+    /* Flex container for sidebar and iframe */
     .container {
       display: flex;
-      width: 100vw;
+      width: 100vw; /* Ensure full viewport width */
       height: 100vh;
       position: relative;
       z-index: 1; /* Above stars */
@@ -97,13 +97,13 @@
       transform: scale(1.2);
       color: white;
     }
-    /* Embed container */
-    .embed-container {
+    /* Iframe container */
+    .iframe-container {
       flex: 1;
       height: 100vh;
       position: relative;
     }
-    .embed-container embed {
+    .iframe-container iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -131,9 +131,9 @@
       <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></a></div>
     </div>
 
-    <!-- Embed Container -->
-    <div class="embed-container">
-      <embed id="embed-embed" src="" type="text/html">
+    <!-- Iframe Embed Container -->
+    <div class="iframe-container">
+      <iframe id="embed-iframe" src=""></iframe>
     </div>
   </div>
 
@@ -152,29 +152,30 @@
   <script>
     // Retrieve and decode the base64 encoded "h" parameter.
     const h = getParameterByName('h');
-    const embedElement = document.getElementById('embed-embed');
+    const iframe = document.getElementById('embed-iframe');
     if (h) {
       try {
-        const encodedUrl = btoa(h);
+        const decodedUrl = atob(h);
         // Customizable table of URL prefixes for direct embedding.
+        // Edit the entries in this list to suit your needs.
         const directEmbedList = [
           "https://example.com",
           "https://directdomain.com",
           "https://mycustomsite.org"
         ];
-        // Determine whether to embed directly or via embed.frogiee.one
-        const useDirectEmbed = directEmbedList.some(prefix => h.startsWith(prefix));
+        // Check if the decoded URL should be embedded directly.
+        const useDirectEmbed = directEmbedList.some(prefix => decodedUrl.startsWith(prefix));
         if (useDirectEmbed) {
-          embedElement.src = h;
+          iframe.src = decodedUrl;
         } else {
-          embedElement.src = 'https://nx.above.gay/active/go/' + encodedUrl;
+          iframe.src = 'https://nx.above.gay/active/go/' + decodedUrl;
         }
       } catch (error) {
         console.error("Error decoding base64 parameter:", error);
-        embedElement.src = 'https://nx.above.gay/active/404.html';
+        iframe.src = 'https://nx.above.gay/active/404.html';
       }
     } else {
-      embedElement.src = 'https://nx.above.gay/active/404.html';
+      iframe.src = 'https://nx.above.gay/active/404.html';
     }
   </script>
 
