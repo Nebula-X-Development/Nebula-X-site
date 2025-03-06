@@ -512,141 +512,129 @@ input:checked + .slider:before {
     </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const performanceSwitch = document.getElementById('performanceMode');
-        const starsContainer = document.querySelector('.stars');
-        const cloakSwitch = document.getElementById('cloakMode');
-        const tabCloakSelect = document.getElementById('tabCloakSelect');
-        const customTabCloak = document.getElementById('customTabCloak');
-        const customTitle = document.getElementById('customTitle');
-        const customFavicon = document.getElementById('customFavicon');
-
-        // Check and apply saved settings from localStorage
-        const savedTabCloak = localStorage.getItem('tabCloak');
-        if (savedTabCloak) {
-            const { title, icon } = JSON.parse(savedTabCloak);
-            updateTab(title, icon);
-            tabCloakSelect.value = 'custom';
-            customTitle.value = title;
-            customFavicon.value = icon;
-        }
-
-        // Tab Cloak Dropdown Change
-        tabCloakSelect.addEventListener('change', () => {
-            if (tabCloakSelect.value === 'custom') {
-                customTabCloak.style.display = 'block'; // Show custom input fields
-            } else if (tabCloakSelect.value === 'none') {
-                customTabCloak.style.display = 'none'; // Hide custom input fields
-                resetTabToDefault(); // Reset to default title and favicon
-            } else {
-                customTabCloak.style.display = 'none'; // Hide custom input fields
-                const siteData = getSiteData(tabCloakSelect.value);
-                updateTab(siteData.title, siteData.icon);
-                saveTabCloak(siteData.title, siteData.icon);
-            }
-        });
-
-        // Update Tab Function
-        function updateTab(title, icon) {
-            document.title = title;
-            updateFavicon(icon);
-        }
-
-        // Update Favicon
-        function updateFavicon(iconURL) {
-            setTimeout(() => {
-                document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
-                const newFavicon = document.createElement("link");
-                newFavicon.rel = "icon";
-                newFavicon.type = "image/x-icon";
-                newFavicon.href = iconURL + ?v=${new Date().getTime()};
-                document.head.appendChild(newFavicon);
-            }, 100);
-        }
-
-        // Save Tab Cloak Settings to localStorage
-        function saveTabCloak(title, icon) {
-            localStorage.setItem('tabCloak', JSON.stringify({ title, icon }));
-        }
-
-        // Predefined Site Data
-        function getSiteData(site) {
-            const siteData = {
-                google: { title: 'Google', icon: 'https://www.google.com/favicon.ico' },
-                untitledDoc: { title: 'Untitled Document', icon: 'https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x16.png' },
-                canvas: { title: 'Canvas', icon: 'https://www.canvaslms.com/favicon.ico' },
-                desmos: { title: 'Desmos Graphing Calculator', icon: 'https://www.desmos.com/favicon.ico' },
-                googleDrive: { title: 'Google Drive', icon: 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png' },
-            };
-            return siteData[site] || { title: '', icon: '' };
-        }
-
-        // Handle custom input
-        customTitle.addEventListener('input', () => {
-            if (tabCloakSelect.value === 'custom') {
-                saveTabCloak(customTitle.value, customFavicon.value);
-                updateTab(customTitle.value, customFavicon.value);
-            }
-        });
-
-        customFavicon.addEventListener('input', () => {
-            if (tabCloakSelect.value === 'custom') {
-                saveTabCloak(customTitle.value, customFavicon.value);
-                updateTab(customTitle.value, customFavicon.value);
-            }
-        });
-
-        // Reset to default title and favicon
-        function resetTabToDefault() {
-            document.title = "Nebula-X"; // Original title
-            updateFavicon("https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png"); // Original favicon
-            localStorage.removeItem('tabCloak'); // Remove settings from localStorage
-        }
-    });
-
-    // Toggle cloak mode
-    cloakSwitch.addEventListener('change', () => {
-        if (cloakSwitch.checked) {
-            // Open a new blank tab with iframe
-            var newTab = window.open('about:blank', '_blank');
-            newTab.document.write('<iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen src="https://nebulax.playcode.io/index.html" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>');
-        }
-    });
-
-            // Star generation and animation logic
-function generateStars() {
-    const starsContainer = document.querySelector('.stars');
-    const starCount = 200; // Increased number of stars
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    
-    for (let i = 0; i < starCount; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-
-        // Random size for each star to create depth
-        const size = Math.random() * 3 + 1; // Size between 1px and 4px
-        star.style.width = ${size}px;
-        star.style.height = ${size}px;
-
-        // Random position for each star
-        star.style.top = ${Math.random() * height}px;
-        star.style.left = ${Math.random() * width}px;
-
-        // Random opacity and animation duration
-        star.style.animationDuration = ${Math.random() * 4 + 3}s; // Random duration between 3s and 7s
-        star.style.animationDelay = ${Math.random() * 5}s; // Random delay before animation starts
-
-        starsContainer.appendChild(star);
-    }
-}
-
-// Call the function to generate stars when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    generateStars();
-});
+    const performanceSwitch = document.getElementById('performanceMode');
+    const starsContainer = document.querySelector('.stars');
+    const cloakSwitch = document.getElementById('cloakMode');
+    const tabCloakSelect = document.getElementById('tabCloakSelect');
+    const customTabCloak = document.getElementById('customTabCloak');
+    const customTitle = document.getElementById('customTitle');
+    const customFavicon = document.getElementById('customFavicon');
 
-   document.addEventListener('DOMContentLoaded', () => {
+    // Check and apply saved settings from localStorage
+    const savedTabCloak = localStorage.getItem('tabCloak');
+    if (savedTabCloak) {
+        const { title, icon } = JSON.parse(savedTabCloak);
+        updateTab(title, icon);
+        tabCloakSelect.value = 'custom';
+        customTitle.value = title;
+        customFavicon.value = icon;
+    }
+
+    // Tab Cloak Dropdown Change
+    tabCloakSelect.addEventListener('change', () => {
+        if (tabCloakSelect.value === 'custom') {
+            customTabCloak.style.display = 'block'; // Show custom input fields
+        } else if (tabCloakSelect.value === 'none') {
+            customTabCloak.style.display = 'none'; // Hide custom input fields
+            resetTabToDefault(); // Reset to default title and favicon
+        } else {
+            customTabCloak.style.display = 'none'; // Hide custom input fields
+            const siteData = getSiteData(tabCloakSelect.value);
+            updateTab(siteData.title, siteData.icon);
+            saveTabCloak(siteData.title, siteData.icon);
+        }
+    });
+
+    // Update Tab Function
+    function updateTab(title, icon) {
+        document.title = title;
+        updateFavicon(icon);
+    }
+
+    // Update Favicon
+    function updateFavicon(iconURL) {
+        setTimeout(() => {
+            document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+            const newFavicon = document.createElement("link");
+            newFavicon.rel = "icon";
+            newFavicon.type = "image/x-icon";
+            newFavicon.href = `${iconURL}?v=${new Date().getTime()}`;
+            document.head.appendChild(newFavicon);
+        }, 100);
+    }
+
+    // Save Tab Cloak Settings to localStorage
+    function saveTabCloak(title, icon) {
+        localStorage.setItem('tabCloak', JSON.stringify({ title, icon }));
+    }
+
+    // Predefined Site Data
+    function getSiteData(site) {
+        const siteData = {
+            google: { title: 'Google', icon: 'https://www.google.com/favicon.ico' },
+            untitledDoc: { title: 'Untitled Document', icon: 'https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_document_x16.png' },
+            canvas: { title: 'Canvas', icon: 'https://www.canvaslms.com/favicon.ico' },
+            desmos: { title: 'Desmos Graphing Calculator', icon: 'https://www.desmos.com/favicon.ico' },
+            googleDrive: { title: 'Google Drive', icon: 'https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png' },
+        };
+        return siteData[site] || { title: '', icon: '' };
+    }
+
+    // Handle custom input
+    customTitle.addEventListener('input', () => {
+        if (tabCloakSelect.value === 'custom') {
+            saveTabCloak(customTitle.value, customFavicon.value);
+            updateTab(customTitle.value, customFavicon.value);
+        }
+    });
+
+    customFavicon.addEventListener('input', () => {
+        if (tabCloakSelect.value === 'custom') {
+            saveTabCloak(customTitle.value, customFavicon.value);
+            updateTab(customTitle.value, customFavicon.value);
+        }
+    });
+
+    // Reset to default title and favicon
+    function resetTabToDefault() {
+        document.title = "Nebula-X"; // Original title
+        updateFavicon("https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png"); // Original favicon
+        localStorage.removeItem('tabCloak'); // Remove settings from localStorage
+    }
+
+    // Star generation and animation logic
+    function generateStars() {
+        const starsContainer = document.querySelector('.stars');
+        const starCount = 200; // Increased number of stars
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            // Random size for each star to create depth
+            const size = Math.random() * 3 + 1; // Size between 1px and 4px
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+
+            // Random position for each star
+            star.style.top = `${Math.random() * height}px`;
+            star.style.left = `${Math.random() * width}px`;
+
+            // Random opacity and animation duration
+            star.style.animationDuration = `${Math.random() * 4 + 3}s`; // Random duration between 3s and 7s
+            star.style.animationDelay = `${Math.random() * 5}s`; // Random delay before animation starts
+
+            starsContainer.appendChild(star);
+        }
+    }
+
+    // Call the function to generate stars when the page loads
+    generateStars();
+
+    // Panic Key Logic
     const panicKeyInput = document.getElementById('panicKeyInput');
     const panicKeyURL = document.getElementById('panicKeyURL');
     const applyPanicKey = document.getElementById('applyPanicKey');
@@ -662,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
             panicKey = { key, url };
             // Store panic key and URL in localStorage
             localStorage.setItem('panicKey', JSON.stringify(panicKey));
-            showNotification(Panic key set to: "${key}", redirecting to ${url});
+            showNotification(`Panic key set to: "${key}", redirecting to ${url}`);
         } else {
             showNotification('Please enter both a panic key and a URL.');
         }
@@ -694,8 +682,18 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => notification.classList.add('show'), 10);
         setTimeout(() => notification.classList.remove('show'), 3000);
     }
-    
+
+    // Cloak Mode Toggle
+    cloakSwitch.addEventListener('change', () => {
+        if (cloakSwitch.checked) {
+            // Open a new blank tab with iframe
+            var newTab = window.open('about:blank', '_blank');
+            newTab.document.write('<iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen src="https://nebulax.playcode.io/index.html" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>');
+        }
+    });
+
 });
+
 </script>
 <script src="panicKey.js"></script>
 </body>
