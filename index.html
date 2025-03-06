@@ -151,12 +151,29 @@
             border: 2px solid #d580ff;
             box-shadow: 0 0 10px #d580ff;
             transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
         }
 
         .content a:hover {
             transform: scale(1.2);
             box-shadow: 0 0 20px #d580ff;
             opacity: 0.9;
+        }
+
+        /* Particle Effect */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 182, 193, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: shoot-out 1s forwards;
+        }
+
+        @keyframes shoot-out {
+            from { opacity: 1; transform: translate(0, 0) scale(1); }
+            to { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.5); }
         }
 
         /* Responsiveness for Sidebar */
@@ -175,7 +192,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const starsContainer = document.querySelector('.stars');
-            const totalStars = 400;
+            const totalStars = 400;  // Doubled the number of stars
 
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
@@ -194,6 +211,33 @@
                     item.classList.add('selected');
                 });
             });
+
+            const button = document.querySelector('.content a');
+            button.addEventListener('mouseenter', () => {
+                const buttonRect = button.getBoundingClientRect();
+                const container = document.body;
+
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+
+                    const angle = Math.random() * 2 * Math.PI;
+                    const distance = Math.random() * 120 + 60;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance * 0.5;
+
+                    particle.style.setProperty('--x', `${x}px`);
+                    particle.style.setProperty('--y', `${y}px`);
+                    particle.style.left = `${buttonRect.left + buttonRect.width / 2}px`;
+                    particle.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
+
+                    container.appendChild(particle);
+
+                    particle.addEventListener('animationend', () => {
+                        particle.remove();
+                    });
+                }
+            });
         });
     </script>
 </head>
@@ -203,20 +247,28 @@
         
         <!-- Sidebar -->
         <div class="sidebar">
+            <!-- Logo at the top of the sidebar with link -->
             <a href="index.html" class="logo-link">
                 <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo">
             </a>
+            
+            <!-- Divider line -->
             <div class="divider"></div>
 
-            <div class="nav-item selected"><a href="index.html"><i class="fa fa-home"></i></a></div>
-            <div class="nav-item"><a href="search.html"><i class="fa fa-search"></i></a></div>
-            <div class="nav-item"><a href="tools.html"><i class="fa-solid fa-screwdriver-wrench"></i></a></div>
-            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad"></i></a></div>
-
+            <!-- Navigation items -->
+            <div class="nav-item selected"><a href="index.html"><i class="fa fa-home" style="color:white;"></i></a></div>
+            <div class="nav-item"><a href="search.html"><i class="fa fa-search" style="color:#d580ff;"></i></a></div>
+<div class="nav-item">
+  <a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a>
+</div>
+            <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></div>
+            
+            <!-- Divider line before About and Settings -->
             <div class="divider"></div>
 
-            <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info"></i></a></div>
-            <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs"></i></a></div>
+            <!-- New "About" and "Settings" buttons at the bottom -->
+            <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info "style="color:#d580ff;"></i></div>
+            <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></div>
         </div>
         
         <!-- Main Content -->
@@ -227,4 +279,68 @@
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const performanceSwitch = document.getElementById('performanceMode');
+        const starsContainer = document.querySelector('.stars');
+        const totalStars = 400;
+
+        // Generate stars
+        for (let i = 0; i < totalStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${2 + Math.random() * 3}s`;
+            starsContainer.appendChild(star);
+        }
+
+        // Check and set the initial state from localStorage
+        if (localStorage.getItem('performanceMode') === 'true') {
+            starsContainer.style.display = 'none'; // Hide stars
+            performanceSwitch.checked = true;
+        }
+
+        // Toggle performance mode
+        performanceSwitch.addEventListener('change', () => {
+            if (performanceSwitch.checked) {
+                starsContainer.style.display = 'none'; // Hide stars
+                localStorage.setItem('performanceMode', 'true');
+            } else {
+                starsContainer.style.display = 'block'; // Show stars
+                localStorage.setItem('performanceMode', 'false');
+            }
+        });
+    });
+      document.addEventListener('DOMContentLoaded', () => {
+      const savedTabCloak = localStorage.getItem('tabCloak');
+      if (savedTabCloak) {
+          const { title, icon } = JSON.parse(savedTabCloak);
+          updateTab(title, icon);
+      }
+  });
+
+  function updateTab(title, icon) {
+      document.title = title;
+      updateFavicon(icon);
+  }
+
+  function updateFavicon(iconURL) {
+      setTimeout(() => { // Delay to ensure DOM is ready
+          // Remove existing favicons
+          document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+          // Create and append new favicon
+          const newFavicon = document.createElement("link");
+          newFavicon.rel = "icon";
+          newFavicon.type = "image/x-icon";
+          newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+          document.head.appendChild(newFavicon);
+
+          console.log("Favicon updated to:", newFavicon.href);
+      }, 100); // Small delay to avoid execution conflicts
+  }
+</script>
+<script src="panicKey.js"></script>
 </html>
