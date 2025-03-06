@@ -348,16 +348,8 @@
       // Close the pop-up when clicking the Close button
       document.getElementById("close-btn").addEventListener("click", function() {
         document.getElementById("popup").style.display = "none";
-      });
-
-      // Redirect to the homepage when clicking the Return Home button
-      document.getElementById("return-home-btn").addEventListener("click", function() {
-        window.location.href = "tools.html";  
-      function updateTab(title, icon) {
-          document.title = title;
-          updateFavicon(icon);
-      }
-
+      })
+      
       function updateFavicon(iconURL) {
           setTimeout(() => { // Delay to ensure DOM is ready
               // Remove existing favicons
