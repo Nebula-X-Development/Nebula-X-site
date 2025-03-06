@@ -350,7 +350,7 @@
         document.getElementById("popup").style.display = "none";
       })
       
-            document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
     const savedTabCloak = localStorage.getItem('tabCloak');
     if (savedTabCloak) {
         const { title, icon } = JSON.parse(savedTabCloak);
@@ -380,7 +380,6 @@ function updateFavicon(iconURL) {
         console.log("Favicon updated to:", newFavicon.href);
     }, 100); // Small delay to ensure DOM is ready
 }
-
     </script>
     <script src="panicKey.js"></script>
   </body>
