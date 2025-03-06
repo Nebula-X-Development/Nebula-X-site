@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nebula X</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            background: radial-gradient(circle at bottom, #7c2ae8, #000);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .chat-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 70vh;
+            transform: translate(-50%, -50%);
+            background: rgba(20, 20, 40, 0.95);
+            border: 2px solid #8a2be2;
+            box-shadow: 0px 0px 15px #8a2be2, 0px 0px 30px #8a2be2;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            resize: both;
+            overflow: hidden;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .chat-header {
+            background: #8a2be2;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            color: white;
+            border-bottom: 2px solid #6a1bbf;
+        }
+
+        .chat-iframe {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            color: white;
+            font-size: 24px;
+            background: none;
+            border: none;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ff5c8d;
+        }
+
+        .return-home {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: #8a2be2;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px #8a2be2;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .return-home:hover {
+            background: #6a1bbf;
+            transform: scale(1.05);
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0px 0px 15px #8a2be2, 0px 0px 30px #8a2be2;
+            }
+            100% {
+                box-shadow: 0px 0px 25px #8a2be2, 0px 0px 50px #8a2be2;
+            }
+        }
+
+        /* Button in the bottom-right corner without hover animation */
+        .open-chatbot-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #d580ff;
+            border: 2px solid #d580ff;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-shadow: 0 0 20px #d580ff, 0 0 40px #d580ff, 0 0 60px #d580ff;
+            box-shadow: 0 0 10px #d580ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="stars"></div>
+        <!-- Open Chatbot Button -->
+        <button id="openChatbot" class="open-chatbot-btn">Open popup chat</button>
+
+        <div class="chat-container" id="chatbox">
+            <div class="chat-header">
+                Nebula X AI Chatbot
+                <!-- GitHub Button -->
+                <a href="https://github.com/Blobby-Boi/" target="_blank" style="position: fixed; bottom: 20px; right: 20px; background-color: #d580ff; color: white; padding: 10px 15px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: bold; box-shadow: 0 0 10px #d580ff; transition: background 0.3s, transform 0.2s;">
+    Blobby-Boi GitHub
+            </a>
+
+                <button class="close-btn" onclick="closeChat()">&times;</button>
+            </div>
+            <iframe class="chat-iframe" src="https://iframe.interaxai.com/67c5bea34dc9e1b3110e697c"></iframe>
+        </div>
+
+        <div class="return-home" onclick="window.location.href='tools.html';">Return Home</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.querySelector('.stars');
+            const totalStars = 400;
+
+            for (let i = 0; i < totalStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.animationDuration = `${2 + Math.random() * 3}s`;
+                starsContainer.appendChild(star);
+            }
+        });
+
+        function closeChat() {
+            document.getElementById('chatbox').style.display = 'none';
+        }
+
+        document.getElementById('openChatbot').addEventListener('click', function() {
+    const chatbotWindow = window.open('about:blank', '_blank', 'width=400,height=600');
+    
+    chatbotWindow.document.open();
+    chatbotWindow.document.write('<html><head><title>Chatbot</title></head><body></body></html>');
+    chatbotWindow.document.close();
+    
+    chatbotWindow.onload = function() {
+        const iframe = document.createElement('iframe');
+        iframe.id = 'innerFrame';
+        iframe.name = 'innerFrame';
+        iframe.sandbox = 'allow-scripts allow-popups allow-forms allow-same-origin';
+        iframe.frameborder = '0';
+        iframe.allowfullscreen = true;
+        iframe.src = 'https://iframe.interaxai.com/67c5bea34dc9e1b3110e697c'; // AI widget source
+        iframe.style.position = 'fixed';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        iframe.style.bottom = '0';
+        iframe.style.right = '0';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.margin = '0';
+        iframe.style.padding = '0';
+        iframe.style.overflow = 'hidden';
+        iframe.style.zIndex = '999999';
+        
+        chatbotWindow.document.body.appendChild(iframe);
+    };
+});
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const savedTabCloak = localStorage.getItem('tabCloak');
+    if (savedTabCloak) {
+        const { title, icon } = JSON.parse(savedTabCloak);
+        updateTab(title, icon);
+    }
+});
+
+function updateTab(title, icon) {
+    document.title = title;
+    if (icon) {
+        updateFavicon(icon);
+    }
+}
+
+function updateFavicon(iconURL) {
+    setTimeout(() => { 
+        // Remove existing favicons
+        document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+        // Create and append new favicon
+        const newFavicon = document.createElement("link");
+        newFavicon.rel = "icon";
+        newFavicon.type = "image/x-icon";
+        newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+        document.head.appendChild(newFavicon);
+
+        console.log("Favicon updated to:", newFavicon.href);
+    }, 100); // Small delay to ensure DOM is ready
+}
+
+    </script>
+    <script src="panicKey.js"></script>
+</body>
+</html>

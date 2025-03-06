@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebula X Embed Launcher</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Background & Body */
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at bottom, #7c2ae8, #000);
+        color: white;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      /* Stars */
+      .stars {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: twinkle 5s infinite;
+      }
+      @keyframes twinkle {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+      /* Header Section */
+      .header {
+        z-index: 1;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .header h1 {
+        font-size: 2.5em;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+        color: #d580ff;
+        text-shadow: 0 0 10px #d580ff;
+      }
+      .divider {
+        width: 60px;
+        border-bottom: 2px solid #d580ff;
+        margin: 10px auto 15px auto;
+      }
+      .description {
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-size: 1em;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        z-index: 1;
+      }
+      /* Launcher Container - Glassmorphism Card */
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        width: 80%;
+        max-width: 500px;
+        text-align: center;
+        z-index: 1;
+      }
+      .container input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+        background: rgba(0,0,0,0.4);
+        color: white;
+        font-size: 1em;
+        box-sizing: border-box;
+        transition: border 0.3s ease, box-shadow 0.3s ease;
+      }
+      .container input[type="text"]:hover,
+      .container input[type="text"]:focus {
+        border-color: #d580ff;
+        box-shadow: 0 0 8px rgba(213, 128, 255, 0.8);
+        outline: none;
+      }
+      .container button {
+        padding: 10px 20px;
+        font-size: 1em;
+        background: #d580ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: #000;
+        font-weight: bold;
+      }
+      .container button:hover {
+        background: #c06ce3;
+      }
+      .message {
+        margin-top: 15px;
+        font-size: 0.9em;
+        color: #7effa0;
+      }
+      .note {
+        margin-top: 10px;
+        font-size: 0.8em;
+        color: #cccccc;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Stars Background -->
+    <div class="stars"></div>
+
+    <!-- Header Section -->
+    <div class="header">
+      <h1>Nebula X Proxy?</h1>
+      <div class="divider"></div>
+      <div class="description">
+        Enter a URL below to open it in a new window using our embed method.
+        this is not a fully working "proxy" but works like one
+      </div>
+    </div>
+
+    <!-- Launcher Container -->
+    <div class="container">
+      <form id="launcher-form">
+        <input type="text" id="launcher-url" placeholder="Enter URL here..." />
+        <button type="submit">Launch URL</button>
+      </form>
+      <p class="message"></p>
+      <p class="note">
+        Note: Some sites (like poki.com or google.com) may not work because they
+        block external connections. Please try less popular sites or smaller
+        game sites. We are working to improve this. this will still bypass
+        school blockers though :)
+      </p>
+    </div>
+
+    <script>
+          // Generate stars for the background
+          document.addEventListener('DOMContentLoaded', () => {
+            const starsContainer = document.querySelector('.stars');
+            const totalStars = 400;
+            for (let i = 0; i < totalStars; i++) {
+              const star = document.createElement('div');
+              star.classList.add('star');
+              star.style.left = Math.random() * 100 + '%';
+              star.style.top = Math.random() * 100 + '%';
+              star.style.animationDelay = Math.random() * 5 + 's';
+              star.style.animationDuration = (Math.random() * 5 + 3) + 's';
+              starsContainer.appendChild(star);
+            }
+          });
+
+          // Function to open a new window that embeds the given URL
+          function Launch(url) {
+            let win = window.open("about:blank", "_blank");
+            if (win) {
+              win.document.write(`<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link rel="icon" href="https://www.gstatic.com/classroom/ic_product_classroom_144.png">
+        <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+          }
+          embed {
+            width: 100vw;
+            height: 100vh;
+            border: none;
+          }
+        </style>
+      </head>
+      <body>
+        <embed src="${url}">
+        <script>
+          window.addEventListener("beforeunload", function(ev) {
+            ev.returnValue = "a";
+            ev.preventDefault();
+            return "aa";
+          });
+        <\/script>
+      </body>
+      </html>`);
+              win.document.close();
+            } else {
+              console.error("Failed to open new window.");
+            }
+          }
+
+          // Handle the form submission to launch the URL
+          function LaunchCustomURL(ev) {
+            ev.preventDefault();
+            const customUrl = document.getElementById("launcher-url").value;
+            if (customUrl) {
+              Launch(customUrl);
+              document.querySelector(".message").textContent = "Opening URL...";
+            } else {
+              document.querySelector(".message").textContent = "Please enter a valid URL.";
+            }
+          }
+
+          document.getElementById("launcher-form").addEventListener("submit", LaunchCustomURL);
+    </script>
+    <!-- About Button -->
+    <button id="about-btn">About</button>
+
+    <!-- Pop-up Container -->
+    <div id="popup">
+      <div class="popup-content">
+        <div id="about-text">
+          Okay, so if you're wondering why this isn't on the search page or why
+          only certain links work, I'll explain it here. Technically, this isn't
+          a proxy because it only embeds the URL you want into a new page,
+          instead of actually connecting to a server and displaying the request.
+          That's why I didn't make it the search page—because I'm planning to
+          have a real proxy for Nebula that will be better than this. This will
+          just be a placeholder until I release the full proxy.
+        </div>
+        <button id="close-btn">Close</button>
+      </div>
+    </div>
+
+    <!-- Return Home Button (top left corner) -->
+    <button id="return-home-btn">Return Home</button>
+
+    <style>
+      /* About Button */
+      #about-btn {
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 1em;
+        background: #d580ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: #000;
+        font-weight: bold;
+      }
+      #about-btn:hover {
+        background: #c06ce3;
+      }
+
+      /* Pop-up Styling */
+      #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        z-index: 9999; /* Ensures it stays on top of other content */
+      }
+      #about-text {
+        background: rgba(0,0,0,0.4);
+        color: white;
+        padding: 10px;
+        font-size: 1.2em;
+        border-radius: 8px;
+        height: auto;
+        overflow-y: auto;
+      }
+      #close-btn {
+        margin-top: 10px;
+        padding: 8px 12px;
+        background: #d580ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: #000;
+        font-weight: bold;
+      }
+      #close-btn:hover {
+        background: #c06ce3;
+      }
+
+      /* Return Home Button */
+      #return-home-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        padding: 10px 15px;
+        background: #d580ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s;
+        color: #000;
+        font-weight: bold;
+      }
+      #return-home-btn:hover {
+        background: #c06ce3;
+      }
+    </style>
+
+    <script>
+      // Show the pop-up when clicking the About button
+      document.getElementById("about-btn").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "block";
+      });
+
+      // Close the pop-up when clicking the Close button
+      document.getElementById("close-btn").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+      });
+
+      // Redirect to the homepage when clicking the Return Home button
+      document.getElementById("return-home-btn").addEventListener("click", function() {
+        window.location.href = "https://nebulax.playcode.io/tools.html";  // Adjust the URL if necessary
+      });
+      function updateTab(title, icon) {
+          document.title = title;
+          updateFavicon(icon);
+      }
+
+      function updateFavicon(iconURL) {
+          setTimeout(() => { // Delay to ensure DOM is ready
+              // Remove existing favicons
+              document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+              // Create and append new favicon
+              const newFavicon = document.createElement("link");
+              newFavicon.rel = "icon";
+              newFavicon.type = "image/x-icon";
+              newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+              document.head.appendChild(newFavicon);
+
+              console.log("Favicon updated to:", newFavicon.href);
+          }, 100); // Small delay to avoid execution conflicts
+      }
+    </script>
+    <script src="panicKey.js"></script>
+  </body>
+</html>
