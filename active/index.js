@@ -34,7 +34,7 @@ form.addEventListener("submit", async (event) => {
 
   const url = search(address.value, searchEngine.value);
   // location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
-  location.href = 'embed.html?h=' + url;
+  location.href = 'nx.above.gay/embed.html?h=' + url;
 });
 
 // Autofill function with auto-submit
