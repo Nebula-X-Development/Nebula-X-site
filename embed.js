@@ -4,7 +4,7 @@ let destination = "";
 try {
   destination = new URL(location.hash.slice(1)).toString();
 } catch (err) {
-  alert(`Bad # string or bad URL. Got error:\n${err}`);
+  alert(`The function has failed, let Above know. Error:\n${err}`);
   throw err;
 }
 
