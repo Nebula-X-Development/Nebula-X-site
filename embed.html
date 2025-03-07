@@ -155,14 +155,14 @@
     const iframe = document.getElementById('embed-iframe');
     if (h) {
       try {
-        iframe.src = 'assets/embed.html#' + h;
+        iframe.src = 'https://bare.nx.above.gay/embed#' + h;
         
       } catch (error) {
-        console.error("Error decoding base64 parameter:", error);
-        iframe.src = 'active/404.html';
+        console.error("Error loading proxy embed:", error);
+        iframe.src = 'https://bare.nx.above.gay/active/404';
       }
     } else {
-      iframe.src = 'active/404.html';
+      iframe.src = 'https://bare.nx.above.gay/active/404';
     }
   </script>
 
