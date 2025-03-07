@@ -200,64 +200,24 @@
 
       <div class="search-container">
         <h1>Explore the Web Beyond the Stars</h1>
+        <div class="desc left-margin">
+          <p id="uv-error"></p>
+          <pre id="uv-error-code"></pre>
+        </div>
         <form class="search-box" id="uv-form">
-          <input
-            type="text"
-            id="uv-address"
-            name="query"
-            placeholder="Search with DuckDuckGo or Enter URL..."
-            required
-          />
-          <button type="submit"><i class="fa fa-arrow-right"></i></button>
+          <input id="uv-search-engine" value="https://duckduckgo.com/?q=%s" type="hidden"/> 
+          <input type="text" id="uv-address" name="query" placeholder="Search with DuckDuckGo or Enter URL..." required/>
+          
+          <!-- <button type="submit"><i class="fa fa-arrow-right"></i></button> -->
         </form>
       </div>
     </div>
 
-    <!-- Ensure search.js is loaded before the inline script that uses its function -->
-    <script>
-          /**
-       *
-       * @param {string} input
-       * @param {string} template Template for a search query.
-       * @returns {string} Fully qualified URL
-       */
-      function search(input, template) {
-        try {
-          // input is a valid URL:
-          // eg: https://example.com, https://example.com/test?q=param
-          return new URL(input).toString();
-        } catch (err) {
-          // input was not a valid URL
-        }
-
-        try {
-          // input is a valid URL when http:// is added to the start:
-          // eg: example.com, https://example.com/test?q=param
-          const url = new URL(`http://${input}`);
-          // only if the hostname has a TLD/subdomain
-          if (url.hostname.includes(".")) return url.toString();
-        } catch (err) {
-          // input was not valid URL
-        }
-
-        // input may have been a valid URL, however the hostname was invalid
-
-        // Attempts to convert the input to a fully qualified URL have failed
-        // Treat the input as a search query
-        return template.replace("%s", encodeURIComponent(input));
-      }
-    </script>
-    <script>
-      document.getElementById("uv-form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const input = document.getElementById("uv-address").value;
-        // Use DuckDuckGo as the search template
-        const url = search(input, "https://duckduckgo.com/?q=%s");
-        // Base64 encode the resulting URL and redirect to embed.html with the encoded 'h' parameter
-        const encodedUrl = btoa(url);
-        window.location.href = "embed.html?h=" + encodedUrl;
-      });
-    </script>
+    <script src="active/uv/uv.bundle.js" defer></script>
+    <script src="active/uv/uv.config.js" defer></script>
+    <script src="active/register-sw.js" defer></script>
+    <script src="active/search.js" defer></script>
+    <script src="active/index.js" defer></script>
 
     <script>
       // Stars animation generation
