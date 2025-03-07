@@ -1,187 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nebula-X</title>
-  <link rel="icon" href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" type="image/png">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      position: relative;
-      background: radial-gradient(circle at bottom, #7c2ae8, #000);
-    }
-    /* Background stars */
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 0;
-      overflow: hidden;
-      background: transparent;
-    }
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0;
-      animation: twinkle 5s infinite;
-    }
-    @keyframes twinkle {
-      0% { opacity: 0; }
-      50% { opacity: 1; }
-      100% { opacity: 0; }
-    }
-    /* Flex container for sidebar and iframe */
-    .container {
-      display: flex;
-      width: 100vw; /* Ensure full viewport width */
-      height: 100vh;
-      position: relative;
-      z-index: 1; /* Above stars */
-    }
-    /* Sidebar (Navbar) */
-    .sidebar {
-      width: 50px;
-      background-color: #111;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 15px;
-      transition: width 0.3s ease-in-out;
-      border-bottom: 2px solid #d580ff;
-      z-index: 2;
-    }
-    .sidebar:hover {
-      width: 70px;
-    }
-    .sidebar .logo {
-      width: 40px;
-      margin-bottom: 10px;
-      transition: transform 0.3s ease;
-    }
-    .sidebar .logo:hover {
-      transform: scale(1.2);
-    }
-    .sidebar .divider {
-      width: 80%;
-      border-bottom: 1px solid #d580ff;
-      margin-bottom: 15px;
-    }
-    .sidebar .nav-item {
-      text-align: center;
-      padding: 10px;
-      cursor: pointer;
-      color: #d580ff;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      margin-bottom: 15px;
-    }
-    .sidebar .nav-item.selected {
-      background-color: #b34cd9;
-      border-radius: 10px;
-      color: white;
-    }
-    .sidebar .nav-item i {
-      font-size: 16px;
-    }
-    .sidebar .nav-item:hover {
-      transform: scale(1.2);
-      color: white;
-    }
-    /* Iframe container */
-    .iframe-container {
-      flex: 1;
-      height: 100vh;
-      position: relative;
-    }
-    .iframe-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-  <!-- Background stars -->
-  <div class="stars"></div>
-  
-  <!-- Main flex container -->
-  <div class="container">
-    <!-- Sidebar (Navbar) -->
-    <div class="sidebar">
-      <a href="index.html" class="logo-link">
-        <img class="logo" src="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" alt="Nebula-X Logo">
-      </a>
-      <div class="divider"></div>
-      <div class="nav-item"><a href="index.html"><i class="fa fa-home" style="color:#d580ff"></i></a></div>
-      <div class="nav-item selected"><a href="search.html"><i class="fa fa-search" style="color:white;"></i></a></div>
-      <div class="nav-item"><a href="tools.html"><i class="fa-solid fa-screwdriver-wrench" style="color:#d580ff;"></i></a></div>
-      <div class="nav-item"><a href="gamepage.html"><i class="fa fa-gamepad" style="color:#d580ff;"></i></a></div>
-      <div class="divider"></div>
-      <div class="nav-item"><a href="Aboutpage.html"><i class="fa fa-circle-info" style="color:#d580ff;"></i></a></div>
-      <div class="nav-item"><a href="settings.html"><i class="fa fa-cogs" style="color:#d580ff;"></i></a></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nebula-X</title>
+    <link
+      rel="icon"
+      href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png"
+      type="image/png"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Your CSS styles remain unchanged */
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        background: radial-gradient(circle at bottom, #7c2ae8, #000);
+        color: white;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+        position: relative;
+      }
+      .background {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .stars {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        overflow: hidden;
+      }
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0;
+        animation: twinkle 5s infinite;
+      }
+      @keyframes twinkle {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 100%;
+        background-color: #111;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        transition: width 0.3s ease-in-out;
+        padding-top: 15px;
+        z-index: 10;
+        border-bottom: 2px solid #d580ff;
+      }
+      .sidebar:hover {
+        width: 70px;
+      }
+      .sidebar .logo {
+        width: 40px;
+        height: auto;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
+      }
+      .sidebar .logo:hover {
+        transform: scale(1.2);
+      }
+      .sidebar .divider {
+        width: 80%;
+        border-bottom: 1px solid #d580ff;
+        margin-bottom: 15px;
+      }
+      .sidebar .nav-item {
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        color: #d580ff;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        margin-bottom: 15px;
+      }
+      .sidebar .nav-item.selected {
+        background-color: #b34cd9;
+        border-radius: 10px;
+        color: white;
+      }
+      .sidebar .nav-item i {
+        font-size: 16px;
+      }
+      .sidebar .nav-item:hover {
+        transform: scale(1.2);
+        color: white;
+      }
+      .search-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      .search-container h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+      .search-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .search-box input {
+        width: 400px;
+        padding: 12px 20px;
+        border-radius: 30px;
+        border: 2px solid #d580ff;
+        outline: none;
+        background-color: #111;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease-in-out;
+      }
+      .search-box input:focus {
+        box-shadow: 0 0 15px #d580ff;
+      }
+      .search-box button {
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        color: #d580ff;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out;
+      }
+      .search-box button:hover {
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background">
+      <div class="stars"></div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <a href="index.html" class="logo-link">
+          <img class="logo" src="assets/logo.png" alt="Nebula-X Logo" />
+        </a>
+        <div class="divider"></div>
+        <div class="nav-item">
+          <a href="index.html"
+            ><i class="fa fa-home" style="color:#d580ff"></i
+          ></a>
+        </div>
+        <div class="nav-item selected">
+          <a href="search.html"
+            ><i class="fa fa-search" style="color:white;"></i
+          ></a>
+        </div>
+        <div class="nav-item">
+          <a href="tools.html"
+            ><i
+              class="fa-solid fa-screwdriver-wrench"
+              style="color:#d580ff;"
+            ></i
+          ></a>
+        </div>
+        <div class="nav-item">
+          <a href="gamepage.html"
+            ><i class="fa fa-gamepad" style="color:#d580ff;"></i
+          ></a>
+        </div>
+        <div class="divider"></div>
+        <div class="nav-item">
+          <a href="Aboutpage.html"
+            ><i class="fa fa-circle-info" style="color:#d580ff;"></i
+          ></a>
+        </div>
+        <div class="nav-item">
+          <a href="settings.html"
+            ><i class="fa fa-cogs" style="color:#d580ff;"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="search-container">
+        <h1>Explore the Web Beyond the Stars</h1>
+        <form class="search-box" id="uv-form">
+          <input
+            type="text"
+            id="uv-address"
+            name="query"
+            placeholder="Search with DuckDuckGo or Enter URL..."
+            required
+          />
+          <button type="submit"><i class="fa fa-arrow-right"></i></button>
+        </form>
+      </div>
     </div>
 
-    <!-- Iframe Embed Container -->
-    <div class="iframe-container">
-      <iframe id="embed-iframe" src=""></iframe>
-    </div>
-  </div>
+    <!-- Ensure search.js is loaded before the inline script that uses its function -->
+    <script>
+          /**
+       *
+       * @param {string} input
+       * @param {string} template Template for a search query.
+       * @returns {string} Fully qualified URL
+       */
+      function search(input, template) {
+        try {
+          // input is a valid URL:
+          // eg: https://example.com, https://example.com/test?q=param
+          return new URL(input).toString();
+        } catch (err) {
+          // input was not a valid URL
+        }
 
-  <script>
-    // Helper function to retrieve query parameters by name.
-    function getParameterByName(name, url = window.location.href) {
-      name = name.replace(/[\[\]]/g, '\\$&');
-      const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-      const results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-  </script>
+        try {
+          // input is a valid URL when http:// is added to the start:
+          // eg: example.com, https://example.com/test?q=param
+          const url = new URL(`http://${input}`);
+          // only if the hostname has a TLD/subdomain
+          if (url.hostname.includes(".")) return url.toString();
+        } catch (err) {
+          // input was not valid URL
+        }
 
-  <script>
-    // Retrieve and decode the base64 encoded "h" parameter.
-    const h = getParameterByName('h');
-    const iframe = document.getElementById('embed-iframe');
-    if (h) {
-      try {
-        iframe.src = 'https://bare.nx.above.gay/embed#' + h;
-        
-      } catch (error) {
-        console.error("Error decoding base64 parameter:", error);
-        iframe.src = 'https://bare.nx.above.gay/active/404.html';
+        // input may have been a valid URL, however the hostname was invalid
+
+        // Attempts to convert the input to a fully qualified URL have failed
+        // Treat the input as a search query
+        return template.replace("%s", encodeURIComponent(input));
       }
-    } else {
-      iframe.src = 'https://bare.nx.above.gay/active/404.html';
-    }
-  </script>
+    </script>
+    <script>
+      document.getElementById("uv-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const input = document.getElementById("uv-address").value;
+        // Use DuckDuckGo as the search template
+        const url = search(input, "https://duckduckgo.com/?q=%s");
+        // Base64 encode the resulting URL and redirect to embed.html with the encoded 'h' parameter
+        const encodedUrl = btoa(url);
+        window.location.href = "embed.html?h=" + encodedUrl;
+      });
+    </script>
 
-  <script>
-    // Stars animation generation
-    document.addEventListener('DOMContentLoaded', () => {
-      const starsContainer = document.querySelector('.stars');
-      const totalStars = 400;
-      for (let i = 0; i < totalStars; i++) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.animationDelay = `${Math.random() * 5}s`;
-        star.style.animationDuration = `${2 + Math.random() * 3}s`;
-        starsContainer.appendChild(star);
-      }
-    });
-  </script>
-  <script src="panicKey.js"></script>
-</body>
+    <script>
+      // Stars animation generation
+      document.addEventListener('DOMContentLoaded', () => {
+        const starsContainer = document.querySelector('.stars');
+        const totalStars = 400;
+        for (let i = 0; i < totalStars; i++) {
+          const star = document.createElement('div');
+          star.classList.add('star');
+          star.style.left = `${Math.random() * 100}%`;
+          star.style.top = `${Math.random() * 100}%`;
+          star.style.animationDelay = `${Math.random() * 5}s`;
+          star.style.animationDuration = `${2 + Math.random() * 3}s`;
+          starsContainer.appendChild(star);
+        }
+      });
+        document.addEventListener('DOMContentLoaded', () => {
+    const savedTabCloak = localStorage.getItem('tabCloak');
+    if (savedTabCloak) {
+        const { title, icon } = JSON.parse(savedTabCloak);
+        updateTab(title, icon);
+    }
+});
+
+function updateTab(title, icon) {
+    document.title = title;
+    if (icon) {
+        updateFavicon(icon);
+    }
+}
+
+function updateFavicon(iconURL) {
+    setTimeout(() => { 
+        // Remove existing favicons
+        document.querySelectorAll("link[rel='icon'], link[rel='shortcut icon']").forEach(e => e.remove());
+
+        // Create and append new favicon
+        const newFavicon = document.createElement("link");
+        newFavicon.rel = "icon";
+        newFavicon.type = "image/x-icon";
+        newFavicon.href = iconURL + `?v=${new Date().getTime()}`; // Cache-busting
+        document.head.appendChild(newFavicon);
+
+        console.log("Favicon updated to:", newFavicon.href);
+    }, 100); // Small delay to ensure DOM is ready
+}
+
+    </script>
+    <script src="panicKey.js"></script>
+  </body>
 </html>
