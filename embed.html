@@ -156,26 +156,14 @@
     if (h) {
       try {
         const decodedUrl = atob(h);
-        // Customizable table of URL prefixes for direct embedding.
-        // Edit the entries in this list to suit your needs.
-        const directEmbedList = [
-          "https://example.com",
-          "https://directdomain.com",
-          "https://mycustomsite.org"
-        ];
-        // Check if the decoded URL should be embedded directly.
-        const useDirectEmbed = directEmbedList.some(prefix => decodedUrl.startsWith(prefix));
-        if (useDirectEmbed) {
-          iframe.src = decodedUrl;
-        } else {
-          iframe.src = 'https://nx.above.gay/active/go/' + h;
-        }
+        iframe.src = 'https://bare.nx.above.gay/embed#' + h;
+        
       } catch (error) {
         console.error("Error decoding base64 parameter:", error);
-        iframe.src = 'https://nx.above.gay/active/404.html';
+        iframe.src = 'https://bare.nx.above.gay/active/404.html';
       }
     } else {
-      iframe.src = 'https://nx.above.gay/active/404.html';
+      iframe.src = 'https://bare.nx.above.gay/active/404.html';
     }
   </script>
 
