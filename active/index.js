@@ -27,7 +27,7 @@ form.addEventListener("submit", async (event) => {
   try {
     await registerSW();
   } catch (err) {
-    error.textContent = "Failed to register service worker. Are you using Firefox?";
+    error.textContent = "Failed to register service worker. Error:";
     errorCode.textContent = err.toString();
     throw err;
   }
