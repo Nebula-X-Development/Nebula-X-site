@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="zkit.png" type="image/png">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: wait;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.2;
+            }
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .main-text {
+            font-size: 5vmin;
+            margin-bottom: 10px;
+            font-family: 'Afacad Flux', sans-serif;
+            font-weight: 600;
+        }
+
+        .sub-text {
+            font-size: 2.5vmin;
+            margin-bottom: 20vh;
+            font-family: 'Atkinson Hyperlegible Next', sans-serif;
+            font-weight: 300;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .footer-text {
+            margin-right: 10px;
+            font-size: 2vmin;
+        }
+
+        .icon {
+            width: 3vmin;
+            height: 3vmin;
+            min-width: 16px;
+            min-height: 16px;
+            max-width: 24px;
+            max-height: 24px;
+        }
+
+        .loading-bar-container {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .loading-bar {
+            height: 100%;
+            width: 30%;
+            background-color: white;
+            animation: loading 2s infinite linear;
+        }
+
+        @media (max-width: 768px) {
+            .loading-bar-container {
+                height: 6px;
+            }
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(333%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="content">
+        <div class="main-text">Deploying website...</div>
+        <div class="sub-text">Be patient, this may take a while</div>
+    </div>
+    <div class="footer">
+        <span class="footer-text">Powered by</span>
+        <img class="icon" src="uv.png" alt="UV Logo">
+        <img class="icon" src="zkit.png" alt="Z-Kit Logo">
+    </div>
+    <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+    </div>
+
+    <script>
+        // Create stars based on screen size
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const screenArea = window.innerWidth * window.innerHeight;
+            const starDensity = 0.0001; // Adjust for more or fewer stars
+            const numberOfStars = Math.floor(screenArea * starDensity);
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Random size based on viewport size
+                const maxSize = Math.min(window.innerWidth, window.innerHeight) * 0.003;
+                const size = Math.random() * maxSize + 1;
+                
+                // Random opacity
+                const opacity = Math.random() * 0.8 + 0.2;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.opacity = opacity;
+                
+                // Add twinkling effect with random durations
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 5;
+                star.style.animation = `twinkle ${duration}s infinite ${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Initial creation
+        createStars();
+        
+        // Recreate stars when window is resized
+        window.addEventListener('resize', () => {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = ''; // Clear existing stars
+            createStars();
+        });
+    </script>
+
+    <script src="active/uv/uv.bundle.js"></script>
+    <script src="active/uv/uv.config.js"></script>
+    <script src="active/register-sw.js"></script>
+    <script src="embed.js"></script>
+</body>
+</html>
