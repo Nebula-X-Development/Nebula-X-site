@@ -27,13 +27,14 @@ form.addEventListener("submit", async (event) => {
   try {
     await registerSW();
   } catch (err) {
-    error.textContent = "Failed to register service worker. Are you using Firefox?";
+    error.textContent = "Failed to register service worker. Error:";
     errorCode.textContent = err.toString();
     throw err;
   }
 
   const url = search(address.value, searchEngine.value);
-  location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+  // location.href = __uv$config.prefix + __uv$config.encodeUrl(url);
+  location.href = 'nx.above.gay/embed.html?h=' + url;
 });
 
 // Autofill function with auto-submit
