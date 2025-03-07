@@ -1,8 +1,8 @@
 self.__uv$config = {
     prefix: '/active/go/',
     bare:'https://nebula-x.above.gay/bare/',
-    encodeUrl: Ultraviolet.codec.base64.encode,
-    decodeUrl: Ultraviolet.codec.base64.decode,
+    encodeUrl: Ultraviolet.codec.xor.encode,
+    decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/active/uv/uv.handler.js',
     bundle: '/active/uv/uv.bundle.js',
     config: '/active/uv/uv.config.js',
