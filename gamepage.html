@@ -469,6 +469,19 @@
           </button>
         </div>
 
+         <div class="tile">
+          <button
+            id="drifthuntersBtn"
+            style="width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"
+            >
+            <img
+              src="https://imgs.crazygames.com/games/drift-hunters/cover-1656950639575.png?metadata=none&quality=40&width=1200&height=630&fit=crop"
+              alt="drift hunters" 
+              style="width: 100%; height: 100%; border-radius: 10px;"
+            />
+          </button>
+        </div>
+
       </div>
     </div>
 
@@ -587,7 +600,13 @@
        document.getElementById("soccerrndmBtn").addEventListener("click", () => {
     var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
     newTab.document.write(`
-        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src=" https://ubg98.github.io/SoccerRandom/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://ubg98.github.io/SoccerRandom/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        </iframe>    `);
+});
+       document.getElementById("drifthuntersBtn").addEventListener("click", () => {
+    var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
+    newTab.document.write(`
+        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://webglmath.github.io/drift-hunters/ " style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
         </iframe>    `);
 });
       </script>
