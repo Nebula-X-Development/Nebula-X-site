@@ -546,6 +546,19 @@
             />
           </button>
         </div>
+
+         <div class="tile">
+          <button
+            id="stickmanhookBtn"
+            style="width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"
+            >
+            <img
+              src="https://www.milysource.com/wp-content/uploads/edd/2024/01/Stickman-Hook.jpg"
+              alt="stick man hook" 
+              style="width: 100%; height: 100%; border-radius: 10px;"
+            />
+          </button>
+        </div>
         
       </div>
     </div>
@@ -702,6 +715,12 @@
     var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
     newTab.document.write(`
         <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://ubg98.github.io/RetroBowl/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        </iframe>    `);
+});
+        document.getElementById("stickmanhookBtn").addEventListener("click", () => {
+    var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
+    newTab.document.write(`
+        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://ubg98.github.io/StickmanHook/ " style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
         </iframe>    `);
 });
       </script>
