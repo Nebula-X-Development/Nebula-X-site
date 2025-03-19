@@ -404,6 +404,18 @@
             />
           </button>
         </div>
+        <div class="tile">
+          <button
+            id="ships3dBtn"
+            style="width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"
+            >
+            <img
+              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.crazygames.com%2Fgame%2Fships-3d&psig=AOvVaw1Jd3jME4dMrMKFFnGvyJe8&ust=1742485891636000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLjX4Pa_lowDFQAAAAAdAAAAABAE"
+              alt="ships3d" 
+              style="width: 100%; height: 100%; border-radius: 10px;"
+            />
+          </button>
+        </div>
 
       </div>
     </div>
@@ -494,6 +506,12 @@
     var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
     newTab.document.write(`
         <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://SuperLiquidSoccer.github.io" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        </iframe>    `);
+});
+      document.getElementById("1v1lolBtn").addEventListener("click", () => {
+    var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
+    newTab.document.write(`
+        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://yp3d.com/ships3d/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
         </iframe>    `);
 });
       </script>
