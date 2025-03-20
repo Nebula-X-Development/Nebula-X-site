@@ -598,6 +598,7 @@
             />
           </button>
         </div>
+        
          <div class="tile">
           <button
             id="doodlejumpBtn"
@@ -606,6 +607,19 @@
             <img
               src="https://cf.geekdo-images.com/OiPhflgflVqvMlJwSsrmrw__opengraph/img/c5aan4Zn8KoPXM71DtG8AIlIzhc=/0x0:972x510/fit-in/1200x630/filters:strip_icc()/pic1753060.jpg"
               alt="doodle jump" 
+              style="width: 100%; height: 100%; border-radius: 10px;"
+            />
+          </button>
+        </div>
+
+         <div class="tile">
+          <button
+            id="motox3mpoolBtn"
+            style="width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"
+            >
+            <img
+              src="https://images.crazygames.com/moto-x3m-pool-party_16x9/20241128073648/moto-x3m-pool-party_16x9-cover?auto=format,compress&q=75&cs=strip"
+              alt="Moto x3m pool party" 
               style="width: 100%; height: 100%; border-radius: 10px;"
             />
           </button>
@@ -796,6 +810,12 @@
     var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
     newTab.document.write(`
         <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://ubg98.github.io/DoodleJump/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        </iframe>    `);
+});
+      document.getElementById("motox3mpoolBtn").addEventListener("click", () => {
+    var newTab = window.open('about:blank', '_blank');  // Use 'var' instead of 'const'
+    newTab.document.write(`
+        <iframe id="innerFrame" name="innerFrame" sandbox="allow-scripts allow-popups allow-forms allow-same-origin" frameborder="0" allowfullscreen="" src="https://67dc249fdcaff100638f6dac--motoxm.netlify.app/" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
         </iframe>    `);
 });
       </script>
