@@ -188,6 +188,86 @@
                 font-size: 14px;
             }
         }
+        /* Button to trigger pop-up */
+.announcement-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.announcement-btn:hover {
+  background-color: #9b4dca;
+}
+
+/* Pop-up styling */
+.announcement-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.announcement-content {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  position: relative;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.announcement-header h2 {
+  color: #6a0dad;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.announcement-header p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.announcement-text p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Links styling */
+.announcement-links a {
+  color: #6a0dad;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.announcement-links a:hover {
+  text-decoration: underline;
+}
+
+/* Close button styling */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -244,7 +324,28 @@
 <body>
     <div class="background">
         <div class="stars"></div>
-        
+        <!-- Button to trigger pop-up -->
+<button id="announcement-btn" class="announcement-btn">📢</button>
+
+<!-- Pop-up Container -->
+<div id="announcement-popup" class="announcement-popup">
+  <div class="announcement-content">
+    <button id="close-btn" class="close-btn">❌</button>
+    <div class="announcement-header">
+      <h2>Announcements</h2>
+      <p>Latest updates, version info, and more!</p>
+    </div>
+    <div id="announcement-text" class="announcement-text">
+      <p>This is where your announcement will appear!</p>
+      <p>Update 1: New features added!</p>
+    </div>
+    <div class="announcement-links">
+      <a href="#" target="_blank">Link 1</a>
+      <a href="#" target="_blank">Link 2</a>
+    </div>
+  </div>
+</div>
+
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Logo at the top of the sidebar with link -->
@@ -341,6 +442,29 @@
           console.log("Favicon updated to:", newFavicon.href);
       }, 100); // Small delay to avoid execution conflicts
   }
+    document.addEventListener('DOMContentLoaded', () => {
+    const announcementBtn = document.getElementById('announcement-btn');
+    const popup = document.getElementById('announcement-popup');
+    const closeBtn = document.getElementById('close-btn');
+
+    // Show pop-up when button is clicked
+    announcementBtn.addEventListener('click', () => {
+        popup.style.display = 'flex';
+    });
+
+    // Close pop-up when close button is clicked
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Close pop-up if background is clicked
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+});
+
 </script>
 <script src="panicKey.js"></script>
 </html>
