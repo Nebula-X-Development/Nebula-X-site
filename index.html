@@ -210,84 +210,80 @@
     box-shadow: 0 0 20px #d580ff;
 }
 
-/* Pop-up Styling */
-.announcement-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
+/* Popup styling */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease-out;
 }
 
-.announcement-content {
-    background-color: #111;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    animation: fadeInDown 1s ease;
-    position: relative;  /* Ensure relative positioning of the content */
+.popup-content {
+  display: flex;
+  width: 70%;
+  height: 80%;
+  background-color: #2d2d2d;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.popup-navbar {
+  width: 20%;
+  background-color: #1a1a1a;
 }
 
-.announcement-header h2 {
-    margin-bottom: 10px;
-    color: #d580ff;
+.popup-navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.announcement-text p {
-    margin: 10px 0;
-    color: #ccc;
+.popup-navbar li {
+  padding: 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.announcement-links {
-    margin-top: 15px;
+.popup-navbar li:hover {
+  background-color: #444;
 }
 
-.announcement-links a {
-    text-decoration: none;
-    color: #d580ff;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
+.popup-navbar li.active {
+  background-color: #333;
 }
 
-.announcement-links a:hover {
-    opacity: 0.7;
+.popup-body {
+  width: 80%;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-/* Close button */
-.close-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 25px;
-    cursor: pointer;
-    position: absolute;  /* Position inside the pop-up */
-    top: 10px;
-    right: 10px;
+.popup-section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
-.close-btn:hover {
-    color: #d580ff;
+.popup-section.active {
+  display: block;
+  opacity: 1;
 }
 
+h2 {
+  color: #fff;
+}
 
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
     </style>
     <script>
@@ -345,28 +341,36 @@
 <body>
     <div class="background">
         <div class="stars"></div>
-        <!-- Button to trigger pop-up -->
-<!-- Button to trigger pop-up -->
-<button id="announcement-btn" class="announcement-btn">📢</button>
-
-<!-- Pop-up Container -->
-<div id="announcement-popup" class="announcement-popup">
-    <div class="announcement-content">
-        <button id="close-btn" class="close-btn">❌</button>
-        <div class="announcement-header">
-            <h2>Announcements</h2>
-            <p>Latest updates, version info, and more! (coming soon)</p>
-        </div>
-        <div id="announcement-text" class="announcement-text">
-            <p>This is where your announcement will appear!</p>
-            <p>Update 1: New features added!</p>
-        </div>
-        <div class="announcement-links">
-            <a href="#" class="request-link">Add your own link (coming soon)</a>
-        </div>
+     <div id="announcementPopup" class="popup">
+  <div class="popup-content">
+    <!-- Navbar -->
+    <div class="popup-navbar">
+      <ul>
+        <li id="announcementsTab" class="active" onclick="switchTab('announcements')">Announcements</li>
+        <li id="updatesTab" onclick="switchTab('updates')">Updates</li>
+        <li id="linksTab" onclick="switchTab('links')">Links</li>
+      </ul>
     </div>
+    
+    <!-- Popup Sections -->
+    <div class="popup-body">
+      <div id="announcements" class="popup-section active">
+        <h2>Announcements</h2>
+        <p>Here are the latest announcements...</p>
+      </div>
+      <div id="updates" class="popup-section">
+        <h2>Updates</h2>
+        <p>Here are the latest updates...</p>
+      </div>
+      <div id="links" class="popup-section">
+        <h2>Links</h2>
+        <p>Here are some useful links...</p>
+      </div>
+    </div>
+  </div>
 </div>
 
+        
         <!-- Sidebar -->
         <div class="sidebar">
             <!-- Logo at the top of the sidebar with link -->
@@ -485,6 +489,19 @@
         }
     });
 });
+function switchTab(tabName) {
+  // Hide all sections
+  const sections = document.querySelectorAll('.popup-section');
+  sections.forEach(section => section.classList.remove('active'));
+  
+  // Remove active class from all navbar items
+  const navbarItems = document.querySelectorAll('.popup-navbar li');
+  navbarItems.forEach(item => item.classList.remove('active'));
+  
+  // Show the selected section and add active class to the navbar item
+  document.getElementById(tabName).classList.add('active');
+  document.getElementById(tabName + 'Tab').classList.add('active');
+}
 
 </script>
 <script src="panicKey.js"></script>
