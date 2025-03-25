@@ -188,27 +188,6 @@
                 font-size: 14px;
             }
         }
-/* Button to trigger pop-up */
-.announcement-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #d580ff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 30px;
-    padding: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #d580ff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.announcement-btn:hover {
-    transform: scale(1.2);
-    box-shadow: 0 0 20px #d580ff;
-}
-
 /* Pop-up Styling */
 .announcement-popup {
     display: none;
@@ -231,6 +210,7 @@
     width: 80%;
     max-width: 600px;
     animation: fadeInDown 1s ease;
+    position: relative;  /* Ensure relative positioning of the content */
 }
 
 @keyframes fadeInDown {
@@ -276,7 +256,7 @@
     color: white;
     font-size: 25px;
     cursor: pointer;
-    position: absolute;
+    position: absolute;  /* Position inside the pop-up */
     top: 10px;
     right: 10px;
 }
@@ -284,6 +264,7 @@
 .close-btn:hover {
     color: #d580ff;
 }
+
 
     </style>
     <script>
