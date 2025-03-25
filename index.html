@@ -285,6 +285,24 @@ h2 {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+        /* Close button styling */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
 
     </style>
     <script>
@@ -347,6 +365,7 @@ h2 {
 
      <div id="announcementPopup" class="popup">
   <div class="popup-content">
+       <button id="close-btn" class="close-btn">X</button>
     <!-- Navbar -->
     <div class="popup-navbar">
       <ul>
