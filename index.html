@@ -505,6 +505,28 @@ function switchTab(tabName) {
   document.getElementById(tabName).classList.add('active');
   document.getElementById(tabName + 'Tab').classList.add('active');
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const announcementBtn = document.getElementById('announcement-btn');
+    const popup = document.getElementById('announcementPopup');  // Corrected ID here
+    const closeBtn = document.getElementById('close-btn');
+
+    // Show pop-up when button is clicked
+    announcementBtn.addEventListener('click', () => {
+        popup.style.display = 'flex';
+    });
+
+    // Close pop-up when close button is clicked
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Close pop-up if background is clicked
+    popup.addEventListener('click', (event) => {
+        if (event.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+});
 
 </script>
 <script src="panicKey.js"></script>
