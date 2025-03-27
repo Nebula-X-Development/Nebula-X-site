@@ -143,7 +143,7 @@
       <h2>Nebula X Launcher</h2>
       <label for="tabCloak">Choose Tab Cloaking:</label>
       <select id="tabCloak">
-        <option value="default">Default</option>
+        <option value="default" selected>Default</option>
         <option value="google">Google</option>
         <option value="classroom">Google Classroom</option>
         <option value="drive">Google Drive</option>
@@ -167,9 +167,48 @@
     });
     function deployLauncher() {
       const cloakOption = document.getElementById('tabCloak').value;
-      alert('Deploying Nebula X with tab cloaking option: ' + cloakOption);
-      // needs functionality sill (above help meh)
+      // it is i, above. i shall help you.
+      
+      let faviconUrl = 'https://nx.above.gay/assets/logo.png';
+      let tabTitle = 'Nebula-X';
+      
+      const preSavedOption = document.getElementById('tabCloak').value;
+      if (preSavedOption === 'default') {
+        faviconUrl = 'https://nx.above.gay/assets/logo.png';
+        tabTitle = 'Nebula-X';
+      } else if (preSavedOption === 'google') {
+        faviconUrl = 'https://www.google.com/favicon.ico';
+        tabTitle = 'Google';
+      } else if (preSavedOption === 'classroom') {
+        faviconUrl = 'https://nx.above.gay/assets/classroom.png';
+        tabTitle = 'Home';
+      } else if (preSavedOption === 'drive') {
+        faviconUrl = 'https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png';
+        tabTitle = 'Home - Google Drive';
+      }
     }
+    
+    var win = window.open();
+    win.document.title = tabTitle;
+    
+    var link = win.document.createElement('link');
+    link.rel = 'shortcut icon';
+    link.href = faviconUrl;
+    win.document.head.appendChild(link);
+    
+    win.document.body.style.margin = '0';
+    win.document.body.style.height = '100vh';
+    
+    var iframe = win.document.createElement('iframe');
+    iframe.style.border = 'none';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.margin = '0';
+    iframe.src = url;
+    
+    win.document.body.appendChild(iframe);
+    
+    window.location.href = "https://www.google.com/";
   </script>
 </body>
 </html>
