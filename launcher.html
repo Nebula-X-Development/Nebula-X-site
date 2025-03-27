@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebula-X Launcher</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/Nebula-X-Development/Nebula-X-BETA/refs/heads/main/NEBULA_LOGO.png" type="image/png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Base Styles */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at bottom, #7c2ae8, #000);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      color: white;
+    }
+    .background {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 5s infinite;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0; }
+      50% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    /* Launcher Container */
+    .launcher-container {
+      position: relative;
+      background: rgba(20, 20, 20, 0.9);
+      border-radius: 15px;
+      padding: 30px;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+      animation: fadeInUp 0.8s ease-out both;
+    }
+    /* Staggered Animations for Elements */
+    .launcher-container h2 {
+      margin-bottom: 20px;
+      color: #d580ff;
+      text-shadow: 0 0 10px #d580ff;
+      animation: fadeInUp 0.8s ease-out both;
+      animation-delay: 0.2s;
+    }
+    .launcher-container label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      animation: fadeInUp 0.8s ease-out both;
+      animation-delay: 0.4s;
+    }
+    .launcher-container select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 2px solid #d580ff;
+      background: #1a1a1a;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2210%22%20height%3D%2210%22%20fill%3D%22white%22%3E%3Cpolygon%20points%3D%220,0%2010,0%205,7%22/%3E%3C/svg%3E');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      animation: fadeInUp 0.8s ease-out both;
+      animation-delay: 0.6s;
+    }
+    .launcher-container select:hover {
+      border-color: #b34cd9;
+      transform: scale(1.02);
+    }
+    .launcher-container select:focus {
+      outline: none;
+      border-color: #b34cd9;
+      box-shadow: 0 0 10px #b34cd9;
+      transform: scale(1.03);
+    }
+    .launcher-container .button {
+      width: 100%;
+      padding: 10px;
+      background: #b34cd9;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #d580ff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease-out both;
+      animation-delay: 0.8s;
+    }
+    .launcher-container .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #d580ff;
+    }
+    /* Keyframes for fade in and slide up effect */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="stars"></div>
+    <div class="launcher-container">
+      <h2>Nebula X Launcher</h2>
+      <label for="tabCloak">Choose Tab Cloaking:</label>
+      <select id="tabCloak">
+        <option value="default">Default</option>
+        <option value="google">Google</option>
+        <option value="classroom">Google Classroom</option>
+        <option value="drive">Google Drive</option>
+      </select>
+      <button class="button" onclick="deployLauncher()">Deploy</button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const starsContainer = document.querySelector('.stars');
+      const totalStars = 400;
+      for (let i = 0; i < totalStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 5 + 's';
+        star.style.animationDuration = (2 + Math.random() * 3) + 's';
+        starsContainer.appendChild(star);
+      }
+    });
+    function deployLauncher() {
+      const cloakOption = document.getElementById('tabCloak').value;
+      alert('Deploying Nebula X with tab cloaking option: ' + cloakOption);
+      // needs functionality sill (above help meh)
+    }
+  </script>
+</body>
+</html>
 
