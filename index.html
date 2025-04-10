@@ -303,6 +303,53 @@ h2 {
   opacity: 0.8;
 }
 
+  #alert-banner {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: repeating-linear-gradient(
+      45deg,
+      #ff0000,
+      #ff0000 10px,
+      #ff4d4d 10px,
+      #ff4d4d 20px
+    );
+    color: white;
+    font-weight: bold;
+    padding: 12px 0;
+    font-size: 16px;
+    text-align: center;
+    z-index: 9999;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #alert-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 0, 0, 0.3);
+    animation: flash 1s infinite alternate;
+    pointer-events: none;
+  }
+
+  @keyframes flash {
+    from { background: rgba(255, 0, 0, 0.2); }
+    to { background: rgba(255, 255, 0, 0.4); }
+  }
+
+  #alert-banner span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-text 15s linear infinite;
+  }
+
+  @keyframes scroll-text {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
 
     </style>
     <script>
@@ -358,6 +405,10 @@ h2 {
     </script>
 </head>
 <body>
+    <!-- 🔥 Emergency Alert Banner -->
+<div id="alert-banner">
+  🚨 <strong>ALERT:</strong> We're experiencing issues with the launcher and website servers. Stay tuned for updates.
+</div>
     <div class="background">
         <div class="stars"></div>
         <!-- Button to trigger announcement pop-up -->
@@ -560,6 +611,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+</script>
+    <script>
+  // Automatically wrap text in span for scrolling
+  const banner = document.getElementById('alert-banner');
+  const text = banner.innerHTML;
+  banner.innerHTML = `<span>${text}</span>`;
 </script>
 <script src="panicKey.js"></script>
 </html>
